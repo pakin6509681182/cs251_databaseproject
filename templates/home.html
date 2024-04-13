@@ -12,8 +12,17 @@
 <body>
     <h1>Hello, World!</h1>
     <form method="POST">
+        <label for="id">ID:</label>
+        <input type="text" name="id" required>
+        <label for="name">Name:</label>
         <input type="text" name="name" required>
+        <label for="age">Age:</label>
+        <input type="text" name="age" required>
         <input type="submit" value="Submit">
+    </form>
+
+    <form action="/view" method="get">
+        <input type="submit" value="View All Data">
     </form>
 </body>
 </html>
