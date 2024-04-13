@@ -29,12 +29,21 @@ conn_str = (
 @app.route('/', methods=['GET', 'POST'])
 def home():
     if request.method == 'POST':
+        id = request.form.get('id')
         name = request.form.get('name')
+        age = request.form.get('age')
         with pyodbc.connect(conn_str) as conn:
             with conn.cursor() as cursor:
-                cursor.execute("INSERT INTO Name VALUES (?);", name)
+                cursor.execute("INSERT INTO UserData VALUES (?,?,?);", id,name,age)
         return redirect(url_for('home'))
     return render_template('home.html')
 
+@app.route('/view', methods=['GET'])
+def view_data():
+    with pyodbc.connect(conn_str) as conn:
+        with conn.cursor() as cursor:
+            cursor.execute("SELECT * FROM UserData;")
+            data = cursor.fetchall()
+    return render_template('view.html', data=data)
 if __name__ == '__main__':
     app.run(debug=True)
