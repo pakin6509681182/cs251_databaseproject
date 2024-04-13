@@ -4,12 +4,26 @@ import pyodbc
 app = Flask(__name__)
 
 # Replace with your own connection string
+
+#For Local
+# conn_str = (
+#     "Driver={ODBC Driver 17 for SQL Server};"
+#     "Server=localhost;"
+#     "Database=db_test;"
+#     "UID=sa;"
+#     "PWD=Choky999;"
+# )
+
+#For Azure
 conn_str = (
     "Driver={ODBC Driver 17 for SQL Server};"
-    "Server=localhost;"
-    "Database=db_test;"
-    "UID=sa;"
-    "PWD=Choky999;"
+    "Server=tcp:cs264group2.database.windows.net,1433;"
+    "Database=cs251;"
+    "UID=cs264group2;"
+    "PWD=adminGroup2;"
+    "Encrypt=yes;"
+    "TrustServerCertificate=no;"
+    "Connection Timeout=30;"
 )
 
 @app.route('/', methods=['GET', 'POST'])
