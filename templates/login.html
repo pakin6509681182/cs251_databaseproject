@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body style="background-image: url('{{ url_for('static', filename='photo/login/login-background.jpg') }}'); background-size: cover; background-position: center;">  
+  <div class="login-container">
+    <div class="login-box">
+      <button class="close-btn" onclick="location.href='{{url_for('homepage')}}';"><img src="{{ url_for('static', filename='photo/login/close-icon.png') }}" alt="Home"></button>
+      <button class="signin-btn" onclick="location.href='{{url_for('myprofile')}}';">Sign in</button>
+      <h1>LOGIN</h1>
+      <p class="small-text">New user? <a href="{{url_for('register')}}" style="color: rgb(168, 75, 75);">Create new account</a></p>
+      <input type="text" id="username" placeholder="Username" oninput="userName = this.value">
+      <input type="password" id="password" placeholder="Password" oninput="password = this.value">
+    </div>
+  </div>
+
+  <script>
+    let userName = "";
+    let password = "";
+
+    function signIn() {
+      // Code to validate username and password and sign in
+      // Redirect to Myprofile.html if successful
+      window.location.href = "{{url_for('myprofile')}}";
+    }
+  </script>
+</body>
+</html>

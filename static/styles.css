@@ -1,0 +1,597 @@
+/*home page*/
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #FFEDA6; 
+}
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 20px;
+}
+.header {
+    color: white;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.header a {
+    color: rgb(42, 28, 5);
+    text-decoration: none;
+    margin-right: 10px;
+}
+.welcome {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.welcome img {
+    max-width: 100%;
+    height: auto;
+}
+.stary-pets-label {
+    background-color: #ff9933; 
+    color: white;
+    margin:5% 0;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    display: inline-block;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+.filter {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.category button,
+.colors button {
+    margin: 5px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 3px;
+    background-color: #725a36;
+    color: white;
+    cursor: pointer;
+}
+
+.category button.active {
+    background-color: #2c2217;
+}
+
+.colors button {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.gender label,
+.sterilization label {
+    margin: 5px;
+    font-size: 14px;
+}
+.pet-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.pet-card {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    margin: 10px;
+    padding: 10px;
+    text-align: center;
+    width: 200px; 
+}
+.pet-card img {
+    max-width: 100%;
+    height: auto;
+}
+.pet-card p {
+    margin-top: 10px;
+    color: #3b2b0b; 
+}
+
+/*Addition*/
+.add-pet-container {
+    width: 500px;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+  }
+  
+  .add-pet-container h1 {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .form-group input[type="text"],
+  .form-group input[type="file"],
+  .form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+  
+  .form-group select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-6 -6 16 16'><path fill='%23343a40' d='M4 8l-4 4 4 4 1.4-1.4L6.4 12z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+  }
+  
+  .form-group button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .form-group button[type="submit"]:hover {
+    background-color: #0069d9;
+  }
+
+
+/*MyAddition*/
+.notification {
+    background-color: #ff9933;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 50%;
+    font-size: 12px;
+}
+
+.text-box {
+    background-color: black;
+    color: white;
+    font-size: 50px;
+    padding: 20px;
+
+    width: 100%;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    }
+
+.pet-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.pet-name {
+    font-weight: bold;
+}
+
+.gender {
+    font-size: 12px;
+}
+
+.actions button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: 5px;
+}
+
+.confirm-delete {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    z-index: 999;
+}
+
+.confirm-message {
+    margin-bottom: 10px;
+}
+
+/* Login */
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.login-box {
+  background-color: #ffffff;
+  padding: 70px;
+  border-radius: 10px;
+  text-align: center;
+  position: relative;
+}
+
+.close-btn {
+  position: absolute;
+  top: 3px;
+  right: -120px;
+  padding: 5px;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.close-btn img {
+  width: 29px; 
+}
+
+.small-text {
+  font-size: 14px;
+  font-weight: 550;
+}
+
+input[type="text"],
+input[type="password"],
+button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.signin-btn {
+  position: absolute;
+  background-color: rgb(194, 99, 99);
+  color: rgb(0, 0, 0);
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  border-radius: 50px; /* รูปวงกลม */
+  width: 90px; /* กำหนดความกว้างของปุ่ม */
+  font-weight: 550;
+  top: 268px;
+  right: 15px;
+}
+
+/*Create Account*/
+
+.signup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.signup-box {
+  background-color: #ffffff;
+  padding: 70px;
+  border-radius: 10px;
+  text-align: center;
+  position: relative;
+}
+
+.signup-btn {
+  position: absolute;
+  background-color: rgb(194, 99, 99);
+  color: rgb(0, 0, 0);
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  border-radius: 50px; /* รูปวงกลม */
+  width: 90px; /* กำหนดความกว้างของปุ่ม */
+  font-weight: 550;
+  top: 485px;
+  right: 15px;
+}
+
+.signup-close-btn{
+  position: absolute;
+  top: 3px;
+  right: -170px;
+  padding: 5px;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.signup-close-btn img {
+  width: 29px; 
+}
+
+.bd-text {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgb(143, 134, 134);
+  left: 10px;
+}
+
+
+/* Myprofile */
+
+.profile-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.profile-box {
+  background-color: #ffffff;
+  padding: 90px;
+  border-radius: 50px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.profile-box h1 {
+  text-align: center;
+  margin-top: -40px;
+}
+
+.profile-box p {
+  margin-bottom: 10px;
+}
+
+.profile-box p strong {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.profile-box p span {
+  font-weight: normal;
+}
+
+.profile-close-btn {
+  position: absolute;
+  top: 230px;
+  right: -100px;
+  padding: 5px;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.profile-close-btn img {
+  width: 29px; 
+}
+
+.profile-icon {
+  position: absolute;
+  top: 180px; /* ตั้งค่าตำแหน่งของโปรไฟล์ icon ด้านบน */
+  left: 50%; /* ตั้งค่าให้โปรไฟล์ icon อยู่ตรงกลางของหน้าเว็บ */
+  transform: translateX(-50%); /* ย้ายโปรไฟล์ icon ไปทางซ้ายออกจากตำแหน่งกึ่งกลาง */
+  z-index: 9999; /* ตั้งค่า z-index เพื่อให้โปรไฟล์ icon อยู่บนสุด */
+  width: 80px; 
+}
+
+.edit-btn{
+  position: absolute; 
+  background-color: rgb(194, 99, 99);
+  color: rgb(0, 0, 0);
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  border-radius: 50px; /* รูปวงกลม */
+  width: 90px; /* กำหนดความกว้างของปุ่ม */
+  font-weight: 550;
+}
+
+
+/* editMyProfile */
+.edit-profile-icon{
+  position: absolute;
+  top: 50px; /* ตั้งค่าตำแหน่งของโปรไฟล์ icon ด้านบน */
+  left: 50%; /* ตั้งค่าให้โปรไฟล์ icon อยู่ตรงกลางของหน้าเว็บ */
+  transform: translateX(-50%); /* ย้ายโปรไฟล์ icon ไปทางซ้ายออกจากตำแหน่งกึ่งกลาง */
+  z-index: 9999; /* ตั้งค่า z-index เพื่อให้โปรไฟล์ icon อยู่บนสุด */
+  width: 80px; 
+}
+
+.edit-profile-close-btn{
+  position: absolute;
+  top: 100px;
+  right: -200px;
+  padding: 5px;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+.edit-profile-close-btn img {
+  width: 29px; 
+}
+
+.save-btn{
+  position: absolute; 
+  background-color: rgb(194, 99, 99);
+  color: rgb(0, 0, 0);
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  border-radius: 50px; /* รูปวงกลม */
+  width: 90px; /* กำหนดความกว้างของปุ่ม */
+  font-weight: 550;
+}
+
+/*petProfile*/
+.containerInfo {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: 20px;
+}
+#mainImage{
+  z-index: -1;
+  width: 130%;
+  /*position: fixed;*/
+}
+
+.thumbnail-gallery {
+  display: none;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.thumbnail {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.back-button {
+  z-index: 1;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: transparent;
+  border: none;
+  font-size: 20px;
+  color: #fff;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity .3s ease-in-out;
+}
+
+.pet-image:hover .thumbnail-gallery,
+.pet-image:hover .back-button {
+  display: block;
+  opacity: 1;
+}
+
+.pet-info {
+  background-color: #fff;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 50px;
+}
+
+.pet-name {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.found-date {
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+.location-icon {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.publish-alert {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.publish-alert img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.publish-alert span {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.pet-details {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.breed-gender-sterilize {
+  background-color: #ffbf00;
+  display: flex;
+  border-radius: 20cm;
+  width: 500px;
+  height: 50px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.size-age-colors {
+  display: flex;
+  justify-content: center;
+}
+
+.color-orange {
+  background-color: orange;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-left: 10px;
+}
+
+.behavior {
+  font-style: italic;
+  margin-bottom: 10px;
+}
+
+.adopt-btn {
+  background-color: #4a4a4a;
+  color: #fff;
+  border: none;
+  margin: 5%;
+  padding: 10px 20px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.adopt-btn:hover {
+  background-color: #2980B9;
+}
+
+table#thumbnails{
+  background-color:white;
+}
+table#thumbnails tr td img
+{
+  cursor: pointer;
+}

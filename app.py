@@ -45,5 +45,22 @@ def view_data():
             cursor.execute("SELECT * FROM UserData;")
             data = cursor.fetchall()
     return render_template('view.html', data=data)
+
+@app.route('/homepage', methods=['GET'])
+def homepage():
+    return render_template('homepage.html')
+
+@app.route('/login', methods=['GET'])
+def login():
+    return render_template('login.html')
+
+@app.route('/register', methods=['GET'])
+def register():
+    return render_template('register.html')
+
+@app.route('/myprofile', methods=['GET'])
+def myprofile():
+    return render_template('myprofile.html')
+
 if __name__ == '__main__':
     app.run(debug=True)

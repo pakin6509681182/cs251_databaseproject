@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body style="background-image: url('{{ url_for('static', filename='photo/login/login-background.jpg') }}'); background-size: cover; background-position: center;">  
+  <div class="signup-container">
+    <div class="signup-box">
+      <button class="signup-close-btn" onclick="location.href='{{url_for('homepage')}}';"><img src="{{ url_for('static', filename='photo/login/close-icon.png') }}" alt="Home"></button>
+      <button class="signup-btn" onclick="saveData();">Sign up</button>
+      <h1>CREATE ACCOUNT</h1>
+      <p class="small-text">Already have account? <a href="{{url_for('login')}}" style="color: rgb(168, 75, 75);">Sign in</a></p>
+      <input type="text" id="name" placeholder="Name">
+      <input type="text" id="username" placeholder="Username">
+      <input type="password" id="password" placeholder="Password">
+      <input type="text" id="phone" placeholder= "Phone">
+      <input type="text" id="ssn" placeholder= "Citizen ID">
+      <p class="bd-text">Birthdate<input type="date" id="birth" placeholder= "Birthdate"></p>
+      <p class="gender-text">Gender
+        <label class="gender-option">
+          <input type="radio" name="gender" value="MALE"> MALE
+        </label>
+        <label class="gender-option">
+          <input type="radio" name="gender" value="FEMALE"> FEMALE
+        </label>
+        <label class="gender-option">
+          <input type="radio" name="gender" value="OTHERS"> OTHERS
+        </label>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    function saveData() {
+      const name = document.getElementById('name').value.trim();
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value;
+      const phone = document.getElementById('phone').value.trim();
+      const ssn = document.getElementById('ssn').value.trim();
+      const birth = document.getElementById('birth').value;
+      const gender = document.querySelector('input[name="gender"]:checked');
+
+      // Validate data
+      if (name === "" || username === "" || phone === "" || ssn === "" || birth === "" || !gender) {
+        alert("Please fill in all fields.");
+        return;
+      }
+
+      // Validate phone
+      const phoneRegex = /^\d{10}$/;
+      if (!phoneRegex.test(phone)) {
+        alert("Please enter a valid phone number with 10 digits.");
+        return;
+      }
+
+      // Validate ssn
+      const ssnRegex = /^\d{13}$/;
+      if (!ssnRegex.test(ssn)) {
+        alert("Please enter a valid SSN with 13 digits.");
+        return;
+      }
+
+      // Save data to localStorage
+      localStorage.setItem('name', name);
+      localStorage.setItem('username', username);
+      localStorage.setItem('phone', phone);
+      localStorage.setItem('ssn', ssn);
+      localStorage.setItem('birth', birth);
+      localStorage.setItem('gender', gender.value);
+
+      // Redirect to profile page
+      window.location.href = "Myprofile.html";
+    }
+  </script>
+</body>
+</html>
