@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit My Profile</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script> <!-- Include SweetAlert library here -->
+</head>
+<body style="background-image: url('{{ url_for('static', filename='photo/login/login-background.jpg') }}'); background-size: cover; background-position: center;">
+    <div class="profile-container">
+    <div class="profile-box">
+      <h1>Edit Profile</h1>
+      <button class="edit-profile-close-btn" onclick="location.href='homepage.html';"><img src="{{ url_for('static', filename='photo/login/close-icon.png') }}" alt="Home"></button>
+      <form method="POST" action="{{ url_for('updateprofile') }}">
+        <input type="text" id="name" name="name" placeholder="Name" value="{{ session.get('name') }}">
+        <input type="text" id="username" name="username" placeholder="Username" value="{{ session.get('username') }}">
+        <input type="text" id="phone" name="phone" placeholder= "Phone" value="{{ session.get('phone') }}">
+        <input type="text" id="ssn" name="ssn" placeholder= "Citizen ID" value="{{ session.get('ssn') }}">
+        <p class="bd-text">Birthdate<input type="date" id="birth" name="birth" placeholder= "Birthdate" value="{{ birthdate.strftime('%Y-%m-%d') if birthdate else '' }}"></p>        
+        <p class="gender-text">Gender
+          <label class="gender-option">
+            <input type="radio" name="gender" value="MALE"> MALE
+          </label>
+          <label class="gender-option">
+            <input type="radio" name="gender" value="FEMALE"> FEMALE
+          </label>
+          <label class="gender-option">
+            <input type="radio" name="gender" value="OTHERS"> OTHERS
+          </label>
+        </p>
+        <button type="submit" class="edit-btn">Save</button>
+      </form>
+    </div>
+  </div>
+  
+  <script>
+    // Load existing data from localStorage
+    /*window.onload = function() {
+      document.getElementById('edit-name').value = localStorage.getItem('name');
+      document.getElementById('edit-username').value = localStorage.getItem('username');
+      document.getElementById('edit-phone').value = localStorage.getItem('phone');
+      document.getElementById('edit-ssn').value = localStorage.getItem('ssn');
+
+      const gender = localStorage.getItem('gender');
+      if (gender) {
+        document.querySelector(`input[name="edit-gender"][value="${gender}"]`).checked = true;
+      }
+
+      document.getElementById('edit-birth').value = localStorage.getItem('birth');
+    };
+
+    function saveEditedData() {
+      const editedName = document.getElementById('edit-name').value.trim();
+      const editedUsername = document.getElementById('edit-username').value.trim();
+      const editedPhone = document.getElementById('edit-phone').value.trim();
+      const editedSsn = document.getElementById('edit-ssn').value.trim();
+      const editedGender = document.querySelector('input[name="edit-gender"]:checked');
+      const editedBirth = document.getElementById('edit-birth').value;
+
+      // Validate data
+      if (editedName === "" || editedUsername === "" || editedPhone === "" || editedSsn === "" || !editedGender || editedBirth === "") {
+        alert("Please fill in all fields.");
+        return;
+      }
+
+      // Additional validation for phone and ssn
+      if (!/^\d{10}$/.test(editedPhone)) {
+        alert("Please enter a 10-digit phone number.");
+        return;
+      }
+
+      if (!/^\d{13}$/.test(editedSsn)) {
+        alert("Please enter a 13-digit citizen ID.");
+        return;
+      }
+
+      // Save data to localStorage
+      localStorage.setItem('name', editedName);
+      localStorage.setItem('username', editedUsername);
+      localStorage.setItem('phone', editedPhone);
+      localStorage.setItem('ssn', editedSsn);
+      localStorage.setItem('gender', editedGender.value);
+      localStorage.setItem('birth', editedBirth);
+
+      // Redirect to profile page
+      window.location.href = "Myprofile.html";
+    }*/
+  </script>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+    {% for category, message in messages %}
+    <script>
+      if ('{{ category }}' == 'success') {
+        Swal.fire({
+          icon: 'success',
+          title: '{{ message }}',
+          text: 'Profile Edited',
+          confirmButtonText: 'Go to My Profile',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = "{{ url_for('myprofile') }}";
+          }
+        })
+      } else if ('{{ category }}' == 'error') {
+          Swal.fire({
+              icon: 'error',
+              title: '{{ message }}',
+              showConfirmButton: true
+          })
+      }
+  </script>
+    {% endfor %}
+{% endif %}
+{% endwith %}
+</body>
+</html>
