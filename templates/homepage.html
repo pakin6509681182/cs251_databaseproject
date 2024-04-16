@@ -15,7 +15,8 @@
             <a href="MyAddition.html">MY ADDITION</a>
             <a href="Status.html">STATUS</a>
             {% if session.get('name') %}
-                <a href="{{ url_for('myprofile') }}">Welcome, {{ session['name'] }}!</a>                <a href="{{ url_for('logout') }}">Logout</a>
+                <a href="{{ url_for('myprofile') }}">Welcome, {{ session['name'] }}!</a>                
+                <a href="{{ url_for('logout') }}">Logout</a>
             {% else %}
                 <a href="{{url_for('login')}}">Login</a>
             {% endif %}        
