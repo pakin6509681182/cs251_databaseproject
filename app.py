@@ -110,6 +110,33 @@ def myprofile():
         birthdate = datetime.strptime(birthdate, '%a, %d %b %Y %H:%M:%S %Z')
     return render_template('myprofile.html', birthdate=birthdate)
 
+@app.route('/updateprofile', methods=['GET', 'POST'])
+def updateprofile():
+    birthdate = session.get('birth')
+    if birthdate:
+        birthdate = datetime.strptime(birthdate, '%a, %d %b %Y %H:%M:%S %Z')
+    if request.method == 'POST':
+        try:
+            name = request.form.get('name')
+            username = request.form.get('username')
+            #phone = request.form.get('phone')
+            ssn = request.form.get('ssn')
+            birth = request.form.get('birth')
+            with pyodbc.connect(conn_str) as conn:
+                with conn.cursor() as cursor:
+                    cursor.execute("UPDATE [User] SET name = ?, username = ?, ssn = ?, birthDate = ? WHERE userID = ?;", name, username, ssn, birth, session.get('userID'))
+                    cursor.execute("SELECT * FROM [User] WHERE userID = ?;", session.get('userID'))
+                    user = cursor.fetchone()
+                    if user:
+                        session['username'] = username
+                        session['name'] = user[2]
+                        session['ssn'] = user[1]
+                        session['birth'] = user[3]
+            flash('Registration successful', 'success')
+        except Exception as e:
+            flash('An error occurred: ' + str(e), 'error')
+    return render_template('updateprofile.html', birthdate=birthdate)
+
 @app.route('/logout')
 def logout():
     session.clear()
