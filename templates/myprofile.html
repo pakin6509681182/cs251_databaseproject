@@ -17,7 +17,7 @@
       <p><strong>Phone:</strong> <span id="display-phone">{{ session.get('phone') }}</span></p>
       <p><strong>Citizen ID:</strong> <span id="display-ssn">{{ session.get('ssn') }}</span></p>
       <p><strong>Gender:</strong> <span id="display-gender">{{ session.get('gender') }}</span></p>
-      <p><strong>Birthdate:</strong> <span id="display-birthdate">{{ session.get('birth') }}</span></p>     
+      <p><strong>Birthdate:</strong> <span id="display-birthdate">{{ birthdate.strftime('%d/%m/%Y') if birthdate else '' }}</span></p>
       <button class="edit-btn" onclick="location.href='EditMyProfile.html';">EDIT</button>    </div>
   </div>
 

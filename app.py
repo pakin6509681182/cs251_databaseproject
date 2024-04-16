@@ -3,6 +3,7 @@ import pyodbc
 from flask_bcrypt import Bcrypt
 import uuid
 import random
+from datetime import datetime
 
 
 app = Flask(__name__)
@@ -102,9 +103,12 @@ def register():
         return redirect(url_for('register'))
     return render_template('register.html')
 
-@app.route('/myprofile', methods=['GET'])
+@app.route('/myprofile')
 def myprofile():
-    return render_template('myprofile.html')
+    birthdate = session.get('birth')
+    if birthdate:
+        birthdate = datetime.strptime(birthdate, '%a, %d %b %Y %H:%M:%S %Z')
+    return render_template('myprofile.html', birthdate=birthdate)
 
 @app.route('/logout')
 def logout():
