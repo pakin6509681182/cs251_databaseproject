@@ -9,3 +9,4 @@ CREATE TABLE [User] (
     UNIQUE (SSN),
     UNIQUE (username)
 );
+
