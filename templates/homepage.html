@@ -3,6 +3,7 @@
 <head>
     <title>Stray Home</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script> <!-- Include SweetAlert library here -->
 </head>  
 <body>
     <div class="container">
@@ -13,7 +14,12 @@
             <a href="Addition.html">ADD PET</a>
             <a href="MyAddition.html">MY ADDITION</a>
             <a href="Status.html">STATUS</a>
-            <a href="{{url_for('login')}}">Login</a>
+            {% if session.get('name') %}
+                <a href="{{ url_for('myprofile') }}">Welcome, {{ session['name'] }}!</a>                
+                <a href="{{ url_for('logout') }}">Logout</a>
+            {% else %}
+                <a href="{{url_for('login')}}">Login</a>
+            {% endif %}        
         </div>
         <div class="welcome">
             <img src="{{ url_for('static', filename='photo/startpage.jpg') }}" alt="Welcome Image">
@@ -82,5 +88,28 @@
             </div>
         </div>
     </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+    {% for category, message in messages %}
+    <script>
+      if ('{{ category }}' == 'success') {
+          Swal.fire({
+              icon: 'success',
+              title: '{{ message }}',
+              showConfirmButton: true
+          })
+
+      } else if ('{{ category }}' == 'error') {
+          Swal.fire({
+              icon: 'error',
+              title: '{{ message }}',
+              showConfirmButton: true
+          })
+      }
+  </script>
+    {% endfor %}
+{% endif %}
+{% endwith %}
 </body>
 </html>

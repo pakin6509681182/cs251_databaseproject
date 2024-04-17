@@ -1,7 +1,15 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for ,flash,session
 import pyodbc
+from flask_bcrypt import Bcrypt
+import uuid
+import random
+from datetime import datetime
+
 
 app = Flask(__name__)
+bcrypt = Bcrypt(app)
+app.secret_key = 'choky'
+
 
 # Replace with your own connection string
 
@@ -50,17 +58,90 @@ def view_data():
 def homepage():
     return render_template('homepage.html')
 
-@app.route('/login', methods=['GET'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        with pyodbc.connect(conn_str) as conn:
+            with conn.cursor() as cursor:
+                cursor.execute("SELECT * FROM [User] WHERE username = ?;", username)
+                user = cursor.fetchone()
+                if user and Bcrypt().check_password_hash(user[6], password):
+                    session['userID'] = user[0]
+                    session['username'] = username
+                    session['name'] = user[2] 
+                    session['ssn'] = user[1]
+                    session['birth'] = user[3]
+                    session['gender'] = user[4]
+                    flash('Login successful', 'success')
+                    return redirect(url_for('login'))
+                else:
+                    flash('Invalid username or password', 'error')
+        return redirect(url_for('login'))
     return render_template('login.html')
 
-@app.route('/register', methods=['GET'])
+@app.route('/register', methods=['GET', 'POST'])
 def register():
+    if request.method == 'POST':
+        try:
+            # Generate a random userID
+            userID = str(random.randint(10000, 99999))
+            name = request.form.get('name')
+            username = request.form.get('username')
+            password = bcrypt.generate_password_hash(request.form.get('password')).decode('utf-8')
+            #phone = request.form.get('phone')
+            ssn = request.form.get('ssn')
+            birth = request.form.get('birth')
+            gender = request.form.get('gender')
+            with pyodbc.connect(conn_str) as conn:
+                with conn.cursor() as cursor:
+                    cursor.execute("INSERT INTO [User] (userID,name, username, pwd, ssn,birthDate,gender) VALUES (?,?,?,?,?,?,?);", userID,name, username, password, ssn,birth,gender)
+            flash('Registration successful', 'success')
+        except Exception as e:
+            flash('An error occurred: ' + str(e), 'error')
+        return redirect(url_for('register'))
     return render_template('register.html')
 
-@app.route('/myprofile', methods=['GET'])
+@app.route('/myprofile')
 def myprofile():
-    return render_template('myprofile.html')
+    birthdate = session.get('birth')
+    if birthdate:
+        birthdate = datetime.strptime(birthdate, '%a, %d %b %Y %H:%M:%S %Z')
+    return render_template('myprofile.html', birthdate=birthdate)
+
+@app.route('/updateprofile', methods=['GET', 'POST'])
+def updateprofile():
+    birthdate = session.get('birth')
+    if birthdate:
+        birthdate = datetime.strptime(birthdate, '%a, %d %b %Y %H:%M:%S %Z')
+    if request.method == 'POST':
+        try:
+            name = request.form.get('name')
+            username = request.form.get('username')
+            #phone = request.form.get('phone')
+            ssn = request.form.get('ssn')
+            birth = request.form.get('birth')
+            with pyodbc.connect(conn_str) as conn:
+                with conn.cursor() as cursor:
+                    cursor.execute("UPDATE [User] SET name = ?, username = ?, ssn = ?, birthDate = ? WHERE userID = ?;", name, username, ssn, birth, session.get('userID'))
+                    cursor.execute("SELECT * FROM [User] WHERE userID = ?;", session.get('userID'))
+                    user = cursor.fetchone()
+                    if user:
+                        session['username'] = username
+                        session['name'] = user[2]
+                        session['ssn'] = user[1]
+                        session['birth'] = user[3]
+            flash('Registration successful', 'success')
+        except Exception as e:
+            flash('An error occurred: ' + str(e), 'error')
+    return render_template('updateprofile.html', birthdate=birthdate)
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    flash('You have been logged out', 'success')
+    return redirect(url_for('homepage'))
 
 if __name__ == '__main__':
     app.run(debug=True)

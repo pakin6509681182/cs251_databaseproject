@@ -10,34 +10,33 @@
     <div class="profile-container">
     <div class="profile-box">
       <img class="profile-icon" src="{{ url_for('static', filename='photo/profile-icon.png') }}" alt="Profile Icon">
-      <h1>Profile</h1>
       <button class="profile-close-btn" onclick="location.href='{{url_for('homepage')}}';"><img src="{{ url_for('static', filename='photo/login/close-icon.png') }}" alt="Home"></button>
-      <p><strong>Name:</strong> <span id="display-name"></span></p>
-      <p><strong>Username:</strong> <span id="display-username"></span></p>
-      <p><strong>Phone:</strong> <span id="display-phone"></span></p>
-      <p><strong>Citizen ID:</strong> <span id="display-ssn"></span></p>
-      <p><strong>Gender:</strong> <span id="display-gender"></span></p>
-      <p><strong>Birthdate:</strong> <span id="display-birthdate"></span></p>
-      <button class="edit-btn" onclick="location.href='EditMyProfile.html';">EDIT</button>
-    </div>
+      <p><strong>UserID:</strong> <span id="display-name">{{ session.get('userID') }}</span></p>
+      <p><strong>Name:</strong> <span id="display-name">{{ session.get('name') }}</span></p>
+      <p><strong>Username:</strong> <span id="display-username">{{ session.get('username') }}</span></p>
+      <p><strong>Phone:</strong> <span id="display-phone">{{ session.get('phone') }}</span></p>
+      <p><strong>Citizen ID:</strong> <span id="display-ssn">{{ session.get('ssn') }}</span></p>
+      <p><strong>Gender:</strong> <span id="display-gender">{{ session.get('gender') }}</span></p>
+      <p><strong>Birthdate:</strong> <span id="display-birthdate">{{ birthdate.strftime('%d/%m/%Y') if birthdate else '' }}</span></p>
+      <button class="edit-btn" onclick="location.href='{{url_for('updateprofile')}}';">EDIT</button>    </div>
   </div>
 
   <script>
     // Get data from localStorage
-    const name = localStorage.getItem('name');
-    const username = localStorage.getItem('username');
-    const phone = localStorage.getItem('phone');
-    const ssn = localStorage.getItem('ssn');
-    const gender = localStorage.getItem('gender');
-    const birthdate = localStorage.getItem('birth');
+    const name = "{{ name }}";
+    const username = "{{ username }}";
+    const phone = "{{ phone }}";
+    const ssn = "{{ ssn }}";
+    const gender = "{{ gender }}";
+    const birthdate = "{{ birthdate }}";
 
     // Display data
-    document.getElementById('display-name').innerText = name;
+    /*document.getElementById('display-name').innerText = name;
     document.getElementById('display-username').innerText = username;
     document.getElementById('display-phone').innerText = phone;
     document.getElementById('display-ssn').innerText = ssn;
     document.getElementById('display-gender').innerText = gender;
-    document.getElementById('display-birthdate').innerText = birthdate;
+    document.getElementById('display-birthdate').innerText = birthdate;*/
   </script>
 </body>
 </html>

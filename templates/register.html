@@ -5,31 +5,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script> <!-- Include SweetAlert library here -->
 </head>
 <body style="background-image: url('{{ url_for('static', filename='photo/login/login-background.jpg') }}'); background-size: cover; background-position: center;">  
   <div class="signup-container">
     <div class="signup-box">
       <button class="signup-close-btn" onclick="location.href='{{url_for('homepage')}}';"><img src="{{ url_for('static', filename='photo/login/close-icon.png') }}" alt="Home"></button>
-      <button class="signup-btn" onclick="saveData();">Sign up</button>
-      <h1>CREATE ACCOUNT</h1>
-      <p class="small-text">Already have account? <a href="{{url_for('login')}}" style="color: rgb(168, 75, 75);">Sign in</a></p>
-      <input type="text" id="name" placeholder="Name">
-      <input type="text" id="username" placeholder="Username">
-      <input type="password" id="password" placeholder="Password">
-      <input type="text" id="phone" placeholder= "Phone">
-      <input type="text" id="ssn" placeholder= "Citizen ID">
-      <p class="bd-text">Birthdate<input type="date" id="birth" placeholder= "Birthdate"></p>
-      <p class="gender-text">Gender
-        <label class="gender-option">
-          <input type="radio" name="gender" value="MALE"> MALE
-        </label>
-        <label class="gender-option">
-          <input type="radio" name="gender" value="FEMALE"> FEMALE
-        </label>
-        <label class="gender-option">
-          <input type="radio" name="gender" value="OTHERS"> OTHERS
-        </label>
-      </p>
+
+      <form method="POST" action="{{ url_for('register') }}">
+        <h1>CREATE ACCOUNT</h1>
+        <p class="small-text">Already have account? <a href="{{url_for('login')}}" style="color: rgb(168, 75, 75);">Sign in</a></p>
+        <input type="text" id="name" name="name" placeholder="Name">
+        <input type="text" id="username" name="username" placeholder="Username">
+        <input type="password" id="password" name="password" placeholder="Password">
+        <input type="text" id="phone" name="phone" placeholder= "Phone">
+        <input type="text" id="ssn" name="ssn" placeholder= "Citizen ID">
+        <p class="bd-text">Birthdate<input type="date" id="birth" name="birth" placeholder= "Birthdate"></p>
+        <p class="gender-text">Gender
+          <label class="gender-option">
+            <input type="radio" name="gender" value="MALE"> MALE
+          </label>
+          <label class="gender-option">
+            <input type="radio" name="gender" value="FEMALE"> FEMALE
+          </label>
+          <label class="gender-option">
+            <input type="radio" name="gender" value="OTHERS"> OTHERS
+          </label>
+        </p>
+        <button type="submit" class="signup-btn">Sign up</button>
+      </form>
     </div>
   </div>
 
@@ -75,5 +79,31 @@
       window.location.href = "Myprofile.html";
     }
   </script>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+        <script>
+          if ('{{ category }}' == 'success') {
+              Swal.fire({
+                  icon: 'success',
+                  title: '{{ message }}',
+                  text: 'You can now login with your credentials.',
+                  showConfirmButton: true
+              }).then((result) => {
+                  if (result.isConfirmed) {
+                      window.location.href = "{{ url_for('login') }}";
+                  }
+              })
+          } else if ('{{ category }}' == 'error') {
+              Swal.fire({
+                  icon: 'error',
+                  title: '{{ message }}',
+                  showConfirmButton: true
+              })
+          }
+      </script>
+        {% endfor %}
+    {% endif %}
+  {% endwith %}
 </body>
 </html>
