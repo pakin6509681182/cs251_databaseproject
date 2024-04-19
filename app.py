@@ -143,5 +143,34 @@ def logout():
     flash('You have been logged out', 'success')
     return redirect(url_for('homepage'))
 
+@app.route('/addition',methods=['GET','POST'])
+def addition():
+    if 'userID' not in session:
+        flash('Please log in first', 'info')
+        #return redirect(url_for('login'))
+    if request.method == 'POST':
+        petID = str(random.randint(10000, 99999))
+        userID = session.get('userID')
+        foundDate = datetime.now()
+        name = request.form.get('name')
+        breed = request.form.get('breed')
+        size = request.form.get('size')
+        type = request.form.get('type')
+        gender = request.form.get('gender')
+        age = request.form.get('age')
+        behaviour = request.form.get('behaviour')
+        sterilisation = request.form.get('sterilisation')
+        colors = request.form.get('colors')
+        with pyodbc.connect(conn_str) as conn:
+            with conn.cursor() as cursor:
+                cursor.execute("INSERT INTO Pet (PetID,name, breed, size, gender, age, behaviour, sterilisation, hair_color,foundDate,userID) VALUES (?,?,?,?,?,?,?,?,?,?,?);",petID, name, breed, size, gender, age, behaviour, sterilisation, colors, foundDate,userID)
+                if type == 'Dog':
+                    cursor.execute("INSERT INTO Dog (PetID) VALUES (?);", petID)
+                elif type == 'Cat':
+                    cursor.execute("INSERT INTO Cat (PetID) VALUES (?);", petID)
+        flash('Animal added successfully', 'success')
+        return redirect(url_for('addition'))
+    return render_template('addition.html')
+
 if __name__ == '__main__':
     app.run(debug=True)

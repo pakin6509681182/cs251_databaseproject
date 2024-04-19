@@ -1,0 +1,263 @@
+/*Addition*/
+
+body {                      /*สีbg*/
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #FFEDA6; 
+}
+
+.container {                /*ทำให้เมนูอยู่ตรงกลางหน้า*/
+    max-width: 960px;
+    
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.header {
+    color: white;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header a {
+    color: rgb(42, 28, 5);
+    text-decoration: none;
+    margin-right: 10px;
+}
+
+/*กรอบข้างใน*/ 
+.add-pet-container {                                               
+    width: 1000px;
+    height: 500px;                    /* ปรับความสูงกล่องใน */
+    position: fixed;
+    margin: 5% auto;                 /*ให้ความสูงกล่อง5%จากพททั้งหมด*/ 
+    padding: 20px;
+    border: 1px solid #908f8f;     /*สีเส้นกรอบใน*/
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+    background-color: #ffffff;
+  }
+
+
+  .add-pet-container h1 {           /*หัวข้อ addpet */
+    text-align: left;
+    margin-bottom: 30px;
+  }
+
+  #labelphoto{
+    font-size: 30px
+  }
+
+  #selectphoto{                                                 /* กรอบเลือกรูป */
+    width: 200px;                                               /* กำหนดความกว้างเป็น 200px */
+    height: 200px;                                              /* กำหนดความสูงเป็น 200px */
+    border: 3px solid #908f8f;                                /* ความหนาเส้นกรบและสี */
+    text-align: center;
+  }
+
+  #namelabel{
+    position: relative;
+    top: -210px;
+    margin-bottom: 200px;
+    margin-left: 270px;
+  }
+
+  #name{
+    width: 200px;                                               
+    height: 50px;
+    position: relative;                                         /* กำหนดตำแหน่งของกรอบโดยอิงต่อตำแหน่งปัจจุบันของมันเอง */
+    top: -200px;
+    margin-bottom: 200px;
+    margin-left: 130px;
+  }
+
+  #breedlabel {
+    position: relative;
+    top: -678px;
+    margin-bottom: 200px;
+    margin-left: 500px;
+  }
+    
+  #breed {
+    width: 200px;                                               
+    height: 50px;
+    position: relative;                                         /* กำหนดตำแหน่งของกรอบโดยอิงต่อตำแหน่งปัจจุบันของมันเอง */
+    top: -434px;
+    bottom: 200px;
+    left: 245px;
+  }
+
+  #sizelabel{
+    position: relative;
+    top: -945px;
+    margin-bottom: 200px;
+    margin-left: 745px;
+  }
+
+  #size{
+    width: 200px;                                               
+    height: 50px;
+    position: relative;                                         
+    top: -568px;
+    bottom: 200px;
+    margin-left: 365px;
+  }
+
+  #typelabel{
+    position: relative;
+    top: -1100px;
+    bottom: 200px;
+    left: 270px;
+  }
+
+  #type{
+    width: 200px;                                               
+    height: 50px;
+    position: relative;                                         
+    top: -545px;
+    bottom: 200px;
+    left: 130px;
+  }
+
+  #genderlabel{
+    position: relative;
+    top: -1170px;
+    bottom: 200px;
+    left: 500px;
+  }
+
+  #gender{
+    width: 200px;                                               
+    height: 50px;
+    position: relative;                                         
+    top: -581px;
+    bottom: 200px;
+    left: 245px;
+  }
+
+  #agelabel{
+    position: relative;
+    top: -1243px;
+    bottom: 200px;
+    left: 745px;
+  }
+
+  #age{
+    width: 200px;                                               
+    height: 50px;
+    position: relative;                                         
+    top: -617.5px;
+    bottom: 200px;
+    left: 365px;
+  }
+
+  #behaviorlabel{
+    position: relative;
+    top: -1190px;
+    bottom: 200px;
+    left: 275px;
+  }
+
+  #behavior{
+    width: 200px;                                               
+    height: 50px;
+    position: relative;                                         
+    top: -590px;
+    bottom: 200px;
+    left: 130px;
+  }
+
+  #sterlabel{
+    position: relative;
+    top: -1263px;
+    bottom: 200px;
+    left: 500px;
+  }
+
+  #ster{
+    width: 200px;                                               
+    height: 100px;
+    position: relative;                                         
+    top: -1250px;
+    bottom: 200px;
+    left: 490px;
+  }
+
+  #colorlabel{
+    position: relative;
+    top: -1385px;
+    bottom: 200px;
+    left: 740px;
+  }
+
+  #color{
+    width: 200px;                                               
+    height: 50px;
+    position: relative;                                         
+    top: -1370px;
+    bottom: 200px;
+    left: 730px;
+  }
+
+  #add{
+    position: relative;
+    top: -1350px;
+    left: 255px;
+  }
+  
+  .form-group { 
+    margin-bottom: px;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .form-group input[type="text"],
+  .form-group input[type="file"],
+  .form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+  }
+  
+  .form-group select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-6 -6 16 16'><path fill='%23343a40' d='M4 8l-4 4 4 4 1.4-1.4L6.4 12z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+  }
+  
+  /*ปรับปุ่ม add*/
+  #add button[type="submit"] {
+    width: 80px;
+    height: 30px;                                /* ปรับความสูงของปุ่ม */
+    position: relative;
+    left: 600px;                                
+    padding: 10px;
+    background-color: #aeaeae;
+    color: #000000;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;       /* เพิ่มการเปลี่ยนสีอย่างนุ่มนวล */
+  }
+  
+  #add button[type="submit"]:hover {
+    background-color: #4f4f4f;                  /* สีเมื่อ hover */
+    color: #ffffff;
+  }
+  
+
+  #labelphoto{
+    font-size: 30
+  }

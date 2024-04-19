@@ -18,17 +18,6 @@
         <input type="text" id="phone" name="phone" placeholder= "Phone" value="{{ session.get('phone') }}">
         <input type="text" id="ssn" name="ssn" placeholder= "Citizen ID" value="{{ session.get('ssn') }}">
         <p class="bd-text">Birthdate<input type="date" id="birth" name="birth" placeholder= "Birthdate" value="{{ birthdate.strftime('%Y-%m-%d') if birthdate else '' }}"></p>        
-        <p class="gender-text">Gender
-          <label class="gender-option">
-            <input type="radio" name="gender" value="MALE"> MALE
-          </label>
-          <label class="gender-option">
-            <input type="radio" name="gender" value="FEMALE"> FEMALE
-          </label>
-          <label class="gender-option">
-            <input type="radio" name="gender" value="OTHERS"> OTHERS
-          </label>
-        </p>
         <button type="submit" class="edit-btn">Save</button>
       </form>
     </div>
