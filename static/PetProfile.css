@@ -1,0 +1,198 @@
+/* PetProfile */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #ffffff; 
+}
+
+.containerInfo {
+  display: flex;
+  align-items: flex-start;
+}
+
+.containerInfo img{
+  margin-top: 20px;
+  margin-left: 10px;
+}
+
+h1{
+  font-size: 55px;
+  margin-bottom: -30px;
+}
+
+.back-button{
+  position: fixed;
+  margin-left: 10px;
+}
+
+
+#mainPet{
+  width: 55%; 
+  height: 100%;
+  position: fixed;
+  z-index: -2;
+}
+
+.PetImages{
+  z-index: -4;
+  margin-left: -50px;
+  margin-top: -20px;
+  height: 105vh;
+  width:80vw;
+}
+
+
+.location-icon img{
+  width: 60%; 
+  height: auto;
+  }
+
+.pet-info {
+  background-color: #fff;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 50px;
+  z-index: 1;
+  right: -1%;
+  padding: 20px;
+  position: fixed;
+  width: 50%;
+  height: 95vh;
+  text-indent: 30px;
+}
+
+.pet-name {
+  font-size: 4rem;
+  font-weight: bold;
+}
+
+.found-date {
+  font-size: 1rem;
+}
+
+.location-container {
+  display: flex; 
+  align-items: center; 
+  font-weight: bold;
+  margin-bottom: 5%;
+}
+
+.location-container img {
+  position: fixed;
+  margin-bottom: 10px;
+  margin-left: 30px;
+  width: 50px; 
+  height: 50px;
+}
+
+.address {
+  font-size: 18px;
+  display: flex; 
+  align-items: center; 
+  margin-left: 85px;
+  margin-top: 20px;
+  font-weight: bold;
+  position: fixed;
+}
+
+.publish-alert {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  
+}
+
+.publish-alert img {
+  position: fixed;
+  margin-left: 35px;
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-left: 30px;
+  margin-top: -10px;
+}
+
+.publish-info {
+  display: flex;
+  flex-direction: column;
+  margin-left: 85px;
+  position: fixed;
+}
+
+.publish-info .name {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.publish-info .status {
+  font-size: 14px;
+  color: #666;
+}
+
+.chat-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #f0f0f0;
+  margin-left: 300px;
+  margin-top: -5px;
+}
+
+.chat-link img {
+  position: fixed;
+  width: 55px;
+  height: 55px;
+}
+
+.pet-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.breed-gender-sterilize {
+  background-color: #ffbf00;
+  display: flex;
+  border-radius: 20cm;
+  width: 500px;
+  height: 50px;
+  align-items: center;
+}
+
+.size-age-colors {
+  display: flex;
+  justify-content: center;
+}
+
+.color-orange {
+  background-color: orange;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-left: 10px;
+}
+
+
+.adopt-btn {
+  background-color: #4a4a4a;
+  color: #fff;
+  border: none;
+  margin-left: 75%;
+  margin-bottom: 5%;
+  padding: 20px 20px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  width: 130px;
+}
+
+.adopt-btn:hover {
+  background-color: #2980B9;
+}

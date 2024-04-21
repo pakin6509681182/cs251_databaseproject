@@ -56,7 +56,7 @@ def view_data():
 
 @app.route('/homepage', methods=['GET'])
 def homepage():
-    return render_template('homepage.html')
+    return render_template('Homepage.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -176,7 +176,7 @@ def addition():
 def myAddition():
     if 'userID' not in session:
         flash('Please log in first', 'info')
-        return redirect(url_for('login'))
+        #return redirect(url_for('login'))
     
     userID = session.get('userID')
     

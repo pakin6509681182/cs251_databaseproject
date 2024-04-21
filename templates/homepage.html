@@ -2,16 +2,17 @@
 <html>
 <head>
     <title>Stray Home</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='Homepage.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script> <!-- Include SweetAlert library here -->
-</head>  
+</head>
 <body>
-    <div class="container">
-        <div class="header">
-            <a href="{{ url_for('homepage') }}">
-                <img src="{{ url_for('static', filename='photo/home.png') }}" alt="Home">
+    <div class="container">   <!--รวมเนื้อหาในหน้าเว็บ-->
+
+        <div class="header">  <!--รวมลิงก์ที่ไปยังเว็บต่างๆ-->
+          <a href="{{ url_for('homepage') }}">
+            <img src="{{ url_for('static', filename='photo/home.png') }}" alt="Home">
             </a>
-            <a href="{{ url_for('addition') }}">ADD PET</a>
+            <a href="{{ url_for('addition') }}">ADD PET</a>              
             <a href="{{ url_for('myAddition') }}">MY ADDITION</a>
             <a href="Status.html">STATUS</a>
             {% if session.get('name') %}
@@ -21,28 +22,23 @@
                 <a href="{{url_for('login')}}">Login</a>
             {% endif %}        
         </div>
-        <div class="welcome">
-            <img src="{{ url_for('static', filename='photo/startpage.jpg') }}" alt="Welcome Image">
-        </div>
-        <div class="text-box">
+
+    <div class="text-box">
             <h2>STRAY HOME</h2>
         </div>
-        <div class="stary-pets-label">ALL STRAY PETS</div>
-
         <div class="filter">
             <div class="category">
-                <button class="active">ALL</button>
-                <button>CAT</button>
-                <button>DOG</button>
+                <button class="category-btn active" data-category="all">ALL</button>
+                <button class="category-btn" data-category="cat">CAT</button>
+                <button class="category-btn" data-category="dog">DOG</button>
             </div>
             <div class="colors">
-                <button style="background-color: transparent;"><i class="fas fa-palette"></i></button>
-                <button style="background-color: black;"></button>
-                <button style="background-color: gray;"></button>
-                <button style="background-color: silver;"></button>
-                <button style="background-color: red;"></button>
-                <button style="background-color: orange;"></button>
-            </div>
+              <button class="color-btn" style="background-color: Red; background-image: linear-gradient(to right, Red, Orange, Yellow, Green, Blue, Indigo, Violet);"></button>
+              <button class="color-btn" style="background-color: black;"></button>
+              <button class="color-btn" style="background-color: brown;"></button>
+              <button class="color-btn" style="background-color: orange;"></button>
+              <button class="color-btn active" style="background-color: white; border-style: solid ;border-color: rgb(207, 207, 207);"></button>
+          </div>
             <div class="gender">
                 <label>
                     <input type="radio" name="gender" value="all" checked> ALL
@@ -56,7 +52,6 @@
             </div>
             <div class="sterilization">
                 <label>
-                    <p>sterilization</p>
                     <input type="radio" name="sterilization" value="all" checked> ALL
                 </label>
                 <label>
@@ -67,49 +62,111 @@
                 </label>
             </div>
         </div>
+        <div class="stary-pets-label">ALL STARY PETS</div>
         <div class="pet-list">
-            
-            <div class="pet-card">
-                <!--- หน้า home page ฟ่าทำไม่ค่อยถูกเลยอะ ฟ่าฝากหน่อยได้มั้ยหอันนี้คือเหมือนมันเกี่ยวกับหลังบ้านมั้ยแต่เราวางเป็นโครงให้เขาก่อน --->
-                <img src="cat1.svg" alt="Cat Image">
-                <p>ITIM &female;</p>
-            </div>
-            <div class="pet-card">
-                <img src="cat2.svg" alt="Cat Image">
-                <p>SALID &male;</p>
-            </div>
-            <div class="pet-card">
-                <img src="cat3.svg" alt="Cat Image">
-                <p>KITTY &female;</p>
-            </div>
-            <div class="pet-card">
-                <img src="cat4.svg" alt="Cat Image">
-                <p>SOM &female;</p>
-            </div>
+            <a href="PetProfile.html" class="pet-card" data-category="cat" data-gender="female" data-sterilization="yes" data-color="orange">
+                <img src="photo/pet_image_1.jpg" alt="Cat Image">
+                <p>ITIM <span>&female;</span></p>
+            </a>
+            <a href="PetProfile.html" class="pet-card" data-category="cat" data-gender="female" data-sterilization="no" data-color="brown">
+                <img src="photo/cat3.jpg" alt="Cat Image">
+                <p>NUAN <span>&female;</span></p>
+            </a>
+            <a href="PetProfile.html" class="pet-card" data-category="cat" data-gender="male" data-sterilization="no" data-color="orange">
+                <img src="photo/cat2.jpg" alt="Cat Image">
+                <p>SALID <span>&male;</span></p>
+            </a>
+            <a href="PetProfile.html" class="pet-card" data-category="cat" data-gender="female" data-sterilization="no" data-color="white">
+                <img src="photo/cat4.jpg" alt="Cat Image">
+                <p>SOM <span>&female;</span></p>
+            </a>
+            <a href="PetProfile.html" class="pet-card" data-category="dog" data-gender="male" data-sterilization="yes" data-color="black">
+                <img src="photo/dog3.jpg" alt="Dog Image">
+                <p>DAM <span>&male;</span></p>
+            </a>
+            <a href="PetProfile.html" class="pet-card" data-category="dog" data-gender="female" data-sterilization="no" data-color="brown">
+                <img src="photo/dog2.jpg" alt="Dog Image">
+                <p>BELLA <span>&female;</span></p>
+            </a>
+            <a href="PetProfile.html" class="pet-card" data-category="dog" data-gender="male" data-sterilization="yes" data-color="brown">
+                <img src="photo/dog1.jpg" alt="Dog Image">
+                <p>REX <span>&male;</span></p>
+            </a>
         </div>
     </div>
 
-    {% with messages = get_flashed_messages(with_categories=true) %}
-{% if messages %}
-    {% for category, message in messages %}
-    <script>
-      if ('{{ category }}' == 'success') {
-          Swal.fire({
-              icon: 'success',
-              title: '{{ message }}',
-              showConfirmButton: true
-          })
 
-      } else if ('{{ category }}' == 'error') {
-          Swal.fire({
-              icon: 'error',
-              title: '{{ message }}',
-              showConfirmButton: true
-          })
-      }
-  </script>
-    {% endfor %}
-{% endif %}
-{% endwith %}
+
+    <script>
+        // Function to filter pets
+// Function to filter pets
+function filterPets() {
+  const category = document.querySelector('.category-btn.active').getAttribute('data-category');
+  const selectedColorButtons = document.querySelectorAll('.color-btn.active');
+  const selectedColors = Array.from(selectedColorButtons).map(button => button.style.backgroundColor);
+  const selectedGender = document.querySelector('.gender input[type="radio"]:checked').value;
+  const selectedSterilization = document.querySelector('.sterilization input[type="radio"]:checked').value;
+
+  const petCards = document.querySelectorAll('.pet-card');
+
+  petCards.forEach(card => {
+    const cardCategory = card.getAttribute('data-category');
+    const cardColor = card.getAttribute('data-color');
+    const cardGender = card.getAttribute('data-gender');
+    const cardSterilization = card.getAttribute('data-sterilization');
+
+    const categoryMatch = (category === 'all' || cardCategory === category);
+    const colorMatch = (selectedColors.length === 0 || selectedColors.includes(cardColor));
+    const genderMatch = (selectedGender === 'all' || cardGender === selectedGender);
+    const sterilizationMatch = (selectedSterilization === 'all' || cardSterilization === selectedSterilization);
+
+    if (categoryMatch && colorMatch && genderMatch && sterilizationMatch) {
+      card.style.display = 'block';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+// Set initial state
+filterPets("all");
+
+
+// Function to toggle active class on category buttons
+const categoryButtons = document.querySelectorAll('.category-btn');
+categoryButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    categoryButtons.forEach(btn => btn.classList.remove('active'));
+    button.classList.add('active');
+    filterPets();
+  });
+});
+
+// Function to toggle active class on color buttons
+const colorButtons = document.querySelectorAll('.color-btn');
+colorButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    button.classList.toggle('active');
+    filterPets();
+  });
+});
+
+// Add event listener to gender radio buttons
+const genderRadios = document.querySelectorAll('.gender input[type="radio"]');
+genderRadios.forEach(radio => {
+  radio.addEventListener('change', filterPets);
+});
+
+// Add event listener to sterilization radio buttons
+const sterilizationRadios = document.querySelectorAll('.sterilization input[type="radio"]');
+sterilizationRadios.forEach(radio => {
+  radio.addEventListener('change', filterPets);
+});
+
+// Set initial state
+filterPets();
+
+    </script>
+
 </body>
 </html>
