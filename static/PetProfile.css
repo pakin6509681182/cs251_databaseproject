@@ -171,6 +171,22 @@ h1{
   justify-content: center;
 }
 
+.color-black {
+  background-color: black;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-left: 10px;
+}
+
+.color-brown {
+  background-color: brown;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-left: 10px;
+}
+
 .color-orange {
   background-color: orange;
   width: 20px;
@@ -179,8 +195,8 @@ h1{
   margin-left: 10px;
 }
 
-.color-blue {
-  background-color: blue;
+.color-white{
+  background-color: white;
   width: 20px;
   height: 20px;
   border-radius: 50%;

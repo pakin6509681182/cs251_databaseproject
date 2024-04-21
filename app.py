@@ -163,7 +163,7 @@ def addition():
         colors = request.form.get('colors')
         with pyodbc.connect(conn_str) as conn:
             with conn.cursor() as cursor:
-                cursor.execute("INSERT INTO Pet (PetID,name, breed, size, gender, age, behaviour, sterilisation, hair_color,foundDate,userID) VALUES (?,?,?,?,?,?,?,?,?,?,?);",petID, name, breed, size, gender, age, behaviour, sterilisation, colors, foundDate,userID)
+                cursor.execute("INSERT INTO Pet (PetID,name, breed, size, gender, age, behaviour, sterilization, hair_color,foundDate,userID) VALUES (?,?,?,?,?,?,?,?,?,?,?);",petID, name, breed, size, gender, age, behaviour, sterilisation, colors, foundDate,userID)
                 if type == 'Dog':
                     cursor.execute("INSERT INTO Dog (PetID) VALUES (?);", petID)
                 elif type == 'Cat':
