@@ -22,7 +22,9 @@
                 <a href="{{url_for('login')}}">Login</a>
             {% endif %}        
         </div>
-
+        <div class="welcome">
+            <img src="{{ url_for('static', filename='photo/startpage.jpg') }}" alt="Welcome Image">
+        </div>
     <div class="text-box">
             <h2>STRAY HOME</h2>
         </div>
@@ -65,31 +67,31 @@
         <div class="stary-pets-label">ALL STARY PETS</div>
         <div class="pet-list">
             <a href="PetProfile.html" class="pet-card" data-category="cat" data-gender="female" data-sterilization="yes" data-color="orange">
-                <img src="photo/pet_image_1.jpg" alt="Cat Image">
+                <img src="{{ url_for('static', filename='photo/pet_image_1.jpg') }}" alt="Cat Image">
                 <p>ITIM <span>&female;</span></p>
             </a>
             <a href="PetProfile.html" class="pet-card" data-category="cat" data-gender="female" data-sterilization="no" data-color="brown">
-                <img src="photo/cat3.jpg" alt="Cat Image">
+                <img src="{{ url_for('static', filename='photo/cat3.jpg') }}" alt="Cat Image">
                 <p>NUAN <span>&female;</span></p>
             </a>
             <a href="PetProfile.html" class="pet-card" data-category="cat" data-gender="male" data-sterilization="no" data-color="orange">
-                <img src="photo/cat2.jpg" alt="Cat Image">
+                <img src="{{ url_for('static', filename='photo/cat2.jpg') }}" alt="Cat Image">
                 <p>SALID <span>&male;</span></p>
             </a>
             <a href="PetProfile.html" class="pet-card" data-category="cat" data-gender="female" data-sterilization="no" data-color="white">
-                <img src="photo/cat4.jpg" alt="Cat Image">
+                <img src="{{ url_for('static', filename='photo/cat4.jpg') }}" alt="Cat Image">
                 <p>SOM <span>&female;</span></p>
             </a>
             <a href="PetProfile.html" class="pet-card" data-category="dog" data-gender="male" data-sterilization="yes" data-color="black">
-                <img src="photo/dog3.jpg" alt="Dog Image">
+                <img src="{{ url_for('static', filename='photo/dog3.jpg') }}" alt="Dog Image">
                 <p>DAM <span>&male;</span></p>
             </a>
             <a href="PetProfile.html" class="pet-card" data-category="dog" data-gender="female" data-sterilization="no" data-color="brown">
-                <img src="photo/dog2.jpg" alt="Dog Image">
+                <img src="{{ url_for('static', filename='photo/dog2.jpg') }}" alt="Dog Image">
                 <p>BELLA <span>&female;</span></p>
             </a>
             <a href="PetProfile.html" class="pet-card" data-category="dog" data-gender="male" data-sterilization="yes" data-color="brown">
-                <img src="photo/dog1.jpg" alt="Dog Image">
+                <img src="{{ url_for('static', filename='photo/dog1.jpg') }}" alt="Dog Image">
                 <p>REX <span>&male;</span></p>
             </a>
         </div>
