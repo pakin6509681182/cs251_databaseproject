@@ -85,13 +85,22 @@
                     .then(data => {
                         petList.innerHTML = '';
                         data.forEach(pet => {
-                            const petCard = document.createElement('div');
+                            const petCard = document.createElement('a');
+                            petCard.href = `PetProfile.html?PetID=${pet.PetID}`;
                             petCard.classList.add('pet-card');
-                            petCard.innerHTML = `
-                                <p>${pet.name} ${pet.gender === 'female' ? '&female;' : '&male;'}</p>
-                            `;
+
+                            // const img = document.createElement('img');
+                            // img.src = pet.image;
+                            // img.alt = `${pet.name} Image`;
+                            // petCard.appendChild(img);
+
+                            const p = document.createElement('p');
+                            p.innerHTML = `${pet.name} ${pet.gender === 'female' ? '<span>&female;</span>' : '<span>&male;</span>'}`;
+                            petCard.appendChild(p);
+
                             petList.appendChild(petCard);
                         });
+
                     })
                     .catch(error => console.error('Error:', error));
             }
