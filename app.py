@@ -232,6 +232,9 @@ def filter_pets():
 
     return jsonify(pets)
 
+@app.route('/petprofile')
+def ViewPetProfile():
+    return render_template('PetProfile.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

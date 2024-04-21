@@ -4,38 +4,39 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pet Adoption</title>
-  <link rel="stylesheet" href="PetProfile.css">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='PetProfile.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script> <!-- Include SweetAlert library here -->
 </head>
 <body>
   <div class="containerInfo">
     
-        <a href="homepage.html" class = "back-button">
-            <img src="photo/back.png" alt="Home">
+        <a href="{{ url_for('homepage') }}" class = "back-button">
+            <img src="{{ url_for('static', filename='photo/back.png') }}" alt="Home">
         </a>
         <div onclick="backToGallery()">
           <i class = "fas fa-arrow-left"></i>
         </div>
         
         <div class = "PetImages">
-        <img src = "photo/pet_image_1.jpg" alt="House Image" id="mainPet" > 
+        <img src = "{{ url_for('static', filename='photo/pet_image_1.jpg') }}" alt="House Image" id="mainPet" > 
         </div>
 
         <div class="pet-info">
           <h1 class="pet-name">ITIM</h1>
           <p class="found-date">Found Date: 31 Dec 2023</p>
           <div class="location-container">
-            <img src="photo/location.png">
+            <img src="{{ url_for('static', filename='photo/location.png') }}">
             <div class="address">Muang Phuket</div>
           </div>
 
           <div class="publish-alert">
-            <img src="photo/profile.png" alt="Profile Picture">
+            <img src="{{ url_for('static', filename='photo/profile.png') }}" alt="Profile Picture">
             <div class="publish-info">
                 <span class="name">Pornlada Boonthum</span>
                 <p class="status">Publish this alert</p>
             </div>
             <a href="mailto:straypet@email.com" class="chat-link">
-                <img src="photo/Chat.jpg" alt="Email Icon">
+                <img src="{{ url_for('static', filename='photo/Chat.jpg') }}" alt="Email Icon">
             </a>
         </div>
 
@@ -49,7 +50,5 @@
           <button class="adopt-btn">ADOPT</button>
         </div>
     </div>
-
-      
 </body>
 </html>
