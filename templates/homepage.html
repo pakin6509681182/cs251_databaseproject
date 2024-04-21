@@ -34,12 +34,13 @@
                 <button class="category-btn" data-category="dog">DOG</button>
             </div>
             <div class="colors">
-              <button class="color-btn" style="background-color: Red; background-image: linear-gradient(to right, Red, Orange, Yellow, Green, Blue, Indigo, Violet);"></button>
-              <button class="color-btn" style="background-color: black;"></button>
-              <button class="color-btn" style="background-color: brown;"></button>
-              <button class="color-btn" style="background-color: orange;"></button>
-              <button class="color-btn active" style="background-color: white; border-style: solid ;border-color: rgb(207, 207, 207);"></button>
-          </div>
+                <button class="color-btn active" style="background-color: Red; background-image: linear-gradient(to right, Red, Orange, Yellow, Green, Blue, Indigo, Violet);" value="all"></button>
+                <button class="color-btn" style="background-color: black;" value="black"></button>
+                <button class="color-btn" style="background-color: brown;" value="brown"></button>
+                <button class="color-btn" style="background-color: orange;" value="orange"></button>
+                <button class="color-btn" style="background-color: white; border: 1px solid rgb(207, 207, 207);" value="white"></button>
+            </div>
+
             <div class="gender">
                 <label>
                     <input type="radio" name="gender" value="all" checked> ALL
@@ -65,108 +66,87 @@
         </div>
         <div class="stary-pets-label">ALL STARY PETS</div>
         <div class="pet-list">
-            <a href="PetProfile.html" class="pet-card" data-category="cat" data-gender="female" data-sterilization="yes" data-color="orange">
-                <img src="{{ url_for('static', filename='photo/pet_image_1.jpg') }}" alt="Cat Image">
-                <p>ITIM <span>&female;</span></p>
-            </a>
-            <a href="PetProfile.html" class="pet-card" data-category="cat" data-gender="female" data-sterilization="no" data-color="brown">
-                <img src="{{ url_for('static', filename='photo/cat3.jpg') }}" alt="Cat Image">
-                <p>NUAN <span>&female;</span></p>
-            </a>
-            <a href="PetProfile.html" class="pet-card" data-category="cat" data-gender="male" data-sterilization="no" data-color="orange">
-                <img src="{{ url_for('static', filename='photo/cat2.jpg') }}" alt="Cat Image">
-                <p>SALID <span>&male;</span></p>
-            </a>
-            <a href="PetProfile.html" class="pet-card" data-category="cat" data-gender="female" data-sterilization="no" data-color="white">
-                <img src="{{ url_for('static', filename='photo/cat4.jpg') }}" alt="Cat Image">
-                <p>SOM <span>&female;</span></p>
-            </a>
-            <a href="PetProfile.html" class="pet-card" data-category="dog" data-gender="male" data-sterilization="yes" data-color="black">
-                <img src="{{ url_for('static', filename='photo/dog3.jpg') }}" alt="Dog Image">
-                <p>DAM <span>&male;</span></p>
-            </a>
-            <a href="PetProfile.html" class="pet-card" data-category="dog" data-gender="female" data-sterilization="no" data-color="brown">
-                <img src="{{ url_for('static', filename='photo/dog2.jpg') }}" alt="Dog Image">
-                <p>BELLA <span>&female;</span></p>
-            </a>
-            <a href="PetProfile.html" class="pet-card" data-category="dog" data-gender="male" data-sterilization="yes" data-color="brown">
-                <img src="{{ url_for('static', filename='photo/dog1.jpg') }}" alt="Dog Image">
-                <p>REX <span>&male;</span></p>
-            </a>
+            
         </div>
     </div>
 
-
-
+    
     <script>
-        // Function to filter pets
-// Function to filter pets
-function filterPets() {
-  const category = document.querySelector('.category-btn.active').getAttribute('data-category');
-  const selectedColorButtons = document.querySelectorAll('.color-btn.active');
-  const selectedColors = Array.from(selectedColorButtons).map(button => button.style.backgroundColor);
-  const selectedGender = document.querySelector('.gender input[type="radio"]:checked').value;
-  const selectedSterilization = document.querySelector('.sterilization input[type="radio"]:checked').value;
+        document.addEventListener("DOMContentLoaded", function() {
+            const petList = document.querySelector('.pet-list');
 
-  const petCards = document.querySelectorAll('.pet-card');
+            
 
-  petCards.forEach(card => {
-    const cardCategory = card.getAttribute('data-category');
-    const cardColor = card.getAttribute('data-color');
-    const cardGender = card.getAttribute('data-gender');
-    const cardSterilization = card.getAttribute('data-sterilization');
+            // Function to filter pets
+            function filterPets(category, color, gender, sterilization) {
 
-    const categoryMatch = (category === 'all' || cardCategory === category);
-    const colorMatch = (selectedColors.length === 0 || selectedColors.includes(cardColor));
-    const genderMatch = (selectedGender === 'all' || cardGender === selectedGender);
-    const sterilizationMatch = (selectedSterilization === 'all' || cardSterilization === selectedSterilization);
+                fetch(`/filter?category=${category}&color=${color}&gender=${gender}&sterilization=${sterilization}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        petList.innerHTML = '';
+                        data.forEach(pet => {
+                            const petCard = document.createElement('div');
+                            petCard.classList.add('pet-card');
+                            petCard.innerHTML = `
+                                <p>${pet.name} ${pet.gender === 'female' ? '&female;' : '&male;'}</p>
+                            `;
+                            petList.appendChild(petCard);
+                        });
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
 
-    if (categoryMatch && colorMatch && genderMatch && sterilizationMatch) {
-      card.style.display = 'block';
-    } else {
-      card.style.display = 'none';
-    }
-  });
-}
+            // Set initial state
+            filterPets('all', 'all', 'all', 'all');
 
-// Set initial state
-filterPets("all");
+            // Function to toggle active class on category buttons
+            const categoryButtons = document.querySelectorAll('.category-btn');
+            categoryButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    categoryButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    const selectedColor = document.querySelector('.color-btn.active').getAttribute('value');
+                    const gender = document.querySelector('.gender input[type="radio"]:checked').value;
+                    const sterilization = document.querySelector('.sterilization input[type="radio"]:checked').value;
+                    filterPets(button.getAttribute('data-category'), selectedColor, gender, sterilization);
+                });
+            });
 
+            // Function to toggle active class on color buttons
+            const colorButtons = document.querySelectorAll('.color-btn');
+            colorButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    colorButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    const category = document.querySelector('.category-btn.active').getAttribute('data-category');
+                    const gender = document.querySelector('.gender input[type="radio"]:checked').value;
+                    const sterilization = document.querySelector('.sterilization input[type="radio"]:checked').value;
+                    filterPets(category, button.getAttribute('value'), gender, sterilization);
+                });
+            });
 
-// Function to toggle active class on category buttons
-const categoryButtons = document.querySelectorAll('.category-btn');
-categoryButtons.forEach(button => {
-  button.addEventListener('click', () => {
-    categoryButtons.forEach(btn => btn.classList.remove('active'));
-    button.classList.add('active');
-    filterPets();
-  });
-});
+            // Add event listener to gender radio buttons
+            const genderRadios = document.querySelectorAll('.gender input[type="radio"]');
+            genderRadios.forEach(radio => {
+                radio.addEventListener('change', () => {
+                    const category = document.querySelector('.category-btn.active').getAttribute('data-category');
+                    const selectedColor = document.querySelector('.color-btn.active').getAttribute('value');
+                    const sterilization = document.querySelector('.sterilization input[type="radio"]:checked').value;
+                    filterPets(category, selectedColor, radio.value, sterilization);
+                });
+            });
 
-// Function to toggle active class on color buttons
-const colorButtons = document.querySelectorAll('.color-btn');
-colorButtons.forEach(button => {
-  button.addEventListener('click', () => {
-    button.classList.toggle('active');
-    filterPets();
-  });
-});
-
-// Add event listener to gender radio buttons
-const genderRadios = document.querySelectorAll('.gender input[type="radio"]');
-genderRadios.forEach(radio => {
-  radio.addEventListener('change', filterPets);
-});
-
-// Add event listener to sterilization radio buttons
-const sterilizationRadios = document.querySelectorAll('.sterilization input[type="radio"]');
-sterilizationRadios.forEach(radio => {
-  radio.addEventListener('change', filterPets);
-});
-
-// Set initial state
-filterPets();
-
+            // Add event listener to sterilization radio buttons
+            const sterilizationRadios = document.querySelectorAll('.sterilization input[type="radio"]');
+            sterilizationRadios.forEach(radio => {
+                radio.addEventListener('change', () => {
+                    const category = document.querySelector('.category-btn.active').getAttribute('data-category');
+                    const selectedColor = document.querySelector('.color-btn.active').getAttribute('value');
+                    const gender = document.querySelector('.gender input[type="radio"]:checked').value;
+                    filterPets(category, selectedColor, gender, radio.value);
+                });
+            });
+        });
     </script>
 
 </body>

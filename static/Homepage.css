@@ -161,7 +161,7 @@ body {
   width: 200px;
   margin: 10px;
   text-align: center;
-  display: none; 
+  display: show; 
   text-decoration: none;
   color: inherit;
 }

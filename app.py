@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for ,flash,session
+from flask import Flask, jsonify, render_template, request, redirect, url_for ,flash,session
 import pyodbc
 from flask_bcrypt import Bcrypt
 import uuid
@@ -189,6 +189,49 @@ def myAddition():
 @app.route('/statusUser')
 def statusUser():
     return render_template('StatusUser.html')
+
+@app.route('/filter')
+def filter_pets():
+    category = request.args.get('category')
+    color = request.args.get('color')
+    gender = request.args.get('gender')
+    sterilization = request.args.get('sterilization')
+
+    try:
+        conn = pyodbc.connect(conn_str)
+        cursor = conn.cursor()
+
+        # Construct SQL query based on filter inputs
+        query = "SELECT * FROM Pet WHERE 1=1"
+        params = []
+
+        if category == 'cat':
+            query += " AND EXISTS (SELECT 1 FROM Cat C WHERE C.petID = Pet.PetID)"
+        elif category == 'dog':
+            query += " AND EXISTS (SELECT 1 FROM Dog D WHERE D.PetID = Pet.PetID)"
+
+        if color != 'all':
+            colors = color.split(',')
+            query += f" AND hair_color IN ({','.join(['?'] * len(colors))})"
+            params.extend(colors)
+        if gender != 'all':
+            query += " AND gender = ?"
+            params.append(gender)
+        if sterilization != 'all':
+            query += " AND sterilization = ?"
+            params.append(sterilization)
+
+        cursor.execute(query, params)
+        pets = [dict(zip([column[0] for column in cursor.description], row)) for row in cursor.fetchall()]
+    except pyodbc.Error as e:
+        # Handle errors
+        return jsonify([])  # Return an empty list if an error occurs
+    finally:
+        cursor.close()
+        conn.close()
+
+    return jsonify(pets)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
