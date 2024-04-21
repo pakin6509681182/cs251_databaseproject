@@ -79,10 +79,17 @@
 
             // Function to filter pets
             function filterPets(category, color, gender, sterilization) {
-
+                Swal.fire({
+                    title: 'Loading content...',
+                    onBeforeOpen: () => {
+                        Swal.showLoading()
+                    },
+                    showConfirmButton: false
+                });
                 fetch(`/filter?category=${category}&color=${color}&gender=${gender}&sterilization=${sterilization}`)
                     .then(response => response.json())
                     .then(data => {
+                        Swal.close();
                         petList.innerHTML = '';
                         data.forEach(pet => {
                             const petCard = document.createElement('div');
@@ -93,8 +100,10 @@
                             petList.appendChild(petCard);
                         });
                     })
-                    .catch(error => console.error('Error:', error));
-            }
+                    .catch(error => {
+                        Swal.close();  // Close loading spinner
+                        console.error('Error:', error);
+                    });            }
 
             // Set initial state
             filterPets('all', 'all', 'all', 'all');
