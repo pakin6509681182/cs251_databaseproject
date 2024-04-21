@@ -38,7 +38,7 @@
       <div class="pet-details">
         <p class="breed-gender-sterilize">Breed: {{ pet_data['breed'] }}&emsp;Gender: {{ pet_data['gender'] }}&emsp;Sterilized: {{ pet_data['sterilization'] }}</p>
       </div>
-      <p class="size-age-colors">Size: {{ pet_data['size'] }} &emsp; Age: {{ pet_data['age'] }} &emsp; Hair Color: <span class="color-orange">{{ pet_data['hair_color'] }}</span></p>
+      <p class="size-age-colors">Size: {{ pet_data['size'] }} &emsp; Age: {{ pet_data['age'] }} &emsp; Hair Color: <span class="color-{{ pet_data['hair_color']|lower }}">{{ pet_data['hair_color'] }}</span></p>
       <div class="behavior">
         <p >Behavior: {{ pet_data['behaviour'] }}</p>
       </div>

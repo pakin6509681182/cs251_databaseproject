@@ -179,6 +179,14 @@ h1{
   margin-left: 10px;
 }
 
+.color-blue {
+  background-color: blue;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-left: 10px;
+}
+
 
 .adopt-btn {
   background-color: #4a4a4a;
