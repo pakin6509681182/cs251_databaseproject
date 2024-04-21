@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, render_template, request, redirect, url_for ,flash,session
+from flask import Flask, json, jsonify, render_template, request, redirect, url_for ,flash,session
 import pyodbc
 from flask_bcrypt import Bcrypt
 import uuid
@@ -235,8 +235,35 @@ def filter_pets():
 
 @app.route('/petprofile')
 def ViewPetProfile():
-    category = request.args.get('PetID')
-    return render_template('PetProfile.html')
+    pet_id = request.args.get('PetID')
+    try:
+        conn = pyodbc.connect(conn_str)
+        cursor = conn.cursor()
+        query = """
+            SELECT Pet.*, [User].name AS Uname
+            FROM Pet 
+            INNER JOIN [User] ON Pet.userID = [User].userID 
+            WHERE Pet.PetID = ?
+            """
+            
+        cursor.execute(query, (pet_id,))
+        pet = cursor.fetchone()
+        pet_dict = dict(zip([column[0] for column in cursor.description], pet))
+    except pyodbc.Error as e:
+        # Handle errors
+        return "Error fetching pet data"
+
+    finally:
+        cursor.close()
+        conn.close()
+
+    return redirect(url_for('PetProfile', pet_data=json.dumps(pet_dict)))
+
+@app.route('/PetProfile.html')
+def PetProfile():
+    pet_data = json.loads(request.args.get('pet_data'))
+    return render_template('PetProfile.html', pet_data=pet_data)
+
 
 if __name__ == '__main__':
     app.run(debug=True)

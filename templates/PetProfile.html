@@ -5,50 +5,45 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pet Adoption</title>
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='PetProfile.css') }}">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script> <!-- Include SweetAlert library here -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script> <!-- Include SweetAlert library here -->
 </head>
 <body>
   <div class="containerInfo">
-    
-        <a href="{{ url_for('homepage') }}" class = "back-button">
-            <img src="{{ url_for('static', filename='photo/back.png') }}" alt="Home">
-        </a>
-        <div onclick="backToGallery()">
-          <i class = "fas fa-arrow-left"></i>
-        </div>
-        
-        <div class = "PetImages">
-        <img src = "{{ url_for('static', filename='photo/pet_image_1.jpg') }}" alt="House Image" id="mainPet" > 
-        </div>
-
-        <div class="pet-info">
-          <h1 class="pet-name">ITIM</h1>
-          <p class="found-date">Found Date: 31 Dec 2023</p>
-          <div class="location-container">
-            <img src="{{ url_for('static', filename='photo/location.png') }}">
-            <div class="address">Muang Phuket</div>
-          </div>
-
-          <div class="publish-alert">
-            <img src="{{ url_for('static', filename='photo/profile.png') }}" alt="Profile Picture">
-            <div class="publish-info">
-                <span class="name">Pornlada Boonthum</span>
-                <p class="status">Publish this alert</p>
-            </div>
-            <a href="mailto:straypet@email.com" class="chat-link">
-                <img src="{{ url_for('static', filename='photo/Chat.jpg') }}" alt="Email Icon">
-            </a>
-        </div>
-
-          <div class="pet-details">
-            <p class="breed-gender-sterilize">BREED | SOKOKE&emsp;GENDER | FEMALE&emsp;STERILIZE | YES</p>
-          </div>
-          <p class="size-age-colors">Size: 4.2 KG &emsp; Age: 12 - 60 MONTHS &emsp; Colors: <span class="color-orange"></span></p>
-          <div class="behavior">
-          <p >Behavior: She is particularly sociable, relatively high in friendliness <br><br>&emsp;&emsp;and low in aloofness and shyness</p>
-          </div>
-          <button class="adopt-btn">ADOPT</button>
-        </div>
+    <a href="{{ url_for('homepage') }}" class="back-button">
+      <img src="{{ url_for('static', filename='photo/back.png') }}" alt="Home">
+    </a>
+    <div onclick="backToGallery()">
+      <i class="fas fa-arrow-left"></i>
     </div>
+    <div class="PetImages">
+      <img src="{{ url_for('static', filename='photo/pet_image_1.jpg') }}" alt="Pet Image" id="mainPet"> 
+    </div>
+    <div class="pet-info">
+      <h1 class="pet-name">{{ pet_data['name'] }}</h1>
+      <p class="found-date">Found Date: {{ pet_data['foundDate'] }}</p>
+      <div class="location-container">
+        <img src="{{ url_for('static', filename='photo/location.png') }}">
+        <div class="address">Location: {{ pet_data['location'] }}</div>
+      </div>
+      <div class="publish-alert">
+        <img src="{{ url_for('static', filename='photo/profile.png') }}" alt="Profile Picture">
+        <div class="publish-info">
+            <span class="name">Publisher: {{ pet_data['Uname'] }}</span>
+            <p class="status">Publish this alert</p>
+        </div>
+        <a href="mailto:straypet@email.com" class="chat-link">
+            <img src="{{ url_for('static', filename='photo/Chat.jpg') }}" alt="Email Icon">
+        </a>
+      </div>
+      <div class="pet-details">
+        <p class="breed-gender-sterilize">Breed: {{ pet_data['breed'] }}&emsp;Gender: {{ pet_data['gender'] }}&emsp;Sterilized: {{ pet_data['sterilization'] }}</p>
+      </div>
+      <p class="size-age-colors">Size: {{ pet_data['size'] }} &emsp; Age: {{ pet_data['age'] }} &emsp; Hair Color: <span class="color-orange">{{ pet_data['hair_color'] }}</span></p>
+      <div class="behavior">
+        <p >Behavior: {{ pet_data['behaviour'] }}</p>
+      </div>
+      <button class="adopt-btn">ADOPT</button>
+    </div>
+  </div>
 </body>
 </html>
