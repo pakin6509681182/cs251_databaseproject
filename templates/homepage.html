@@ -7,14 +7,13 @@
 </head>
 <body>
     <div class="container">   <!--รวมเนื้อหาในหน้าเว็บ-->
-
         <div class="header">  <!--รวมลิงก์ที่ไปยังเว็บต่างๆ-->
           <a href="{{ url_for('homepage') }}">
             <img src="{{ url_for('static', filename='photo/home.png') }}" alt="Home">
             </a>
             <a href="{{ url_for('addition') }}">ADD PET</a>              
             <a href="{{ url_for('myAddition') }}">MY ADDITION</a>
-            <a href="Status.html">STATUS</a>
+            <a href="{{ url_for('statusUser') }}">STATUS</a>
             {% if session.get('name') %}
                 <a href="{{ url_for('myprofile') }}">Welcome, {{ session['name'] }}!</a>                
                 <a href="{{ url_for('logout') }}">Logout</a>

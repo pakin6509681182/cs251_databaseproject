@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stray Home</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='Status.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script> <!-- Include SweetAlert library here -->
+</head>
+<body>
+    <div class="container">
+      <div class="header">  <!--รวมลิงก์ที่ไปยังเว็บต่างๆ-->
+        <a href="{{ url_for('homepage') }}">
+          <img src="{{ url_for('static', filename='photo/home.png') }}" alt="Home">
+          </a>
+          <a href="{{ url_for('addition') }}">ADD PET</a>              
+          <a href="{{ url_for('myAddition') }}">MY ADDITION</a>
+          <a href="{{ url_for('statusUser') }}">STATUS</a>
+          {% if session.get('name') %}
+              <a href="{{ url_for('myprofile') }}">Welcome, {{ session['name'] }}!</a>                
+              <a href="{{ url_for('logout') }}">Logout</a>
+          {% else %}
+              <a href="{{url_for('login')}}">Login</a>
+          {% endif %}        
+      </div>
+      <div class="text-box">
+            <h2>STATUS</h2>
+        </div>
+        <div class="stary-pets-label">ALL MY REQUEST</div>
+
+        <table>
+            <tr>
+              <th>PET</th>
+              <th>DATE</th>
+              <th>STATUS</th>
+              <th>FILE</th>
+            </tr>
+            <tr>
+              <td>ITIM</td>
+              <td>01 JAN 2024</td>
+              <td>PROCESSING</td>
+              <td><a href="PermissionFormUser.html">
+                <img src="photo/folder.png" >
+              </a></td>
+            </tr>
+            <tr>
+              <td>ICHAM</td>
+              <td>01 JAN 2023</td>
+              <td>ADOPTED</td>
+              <td><img src="photo/folder.png"></td>
+            </tr>
+            <tr>
+              <td>SOM</td>
+              <td>01 FEB 2023</td>
+              <td>REJECTED</td>
+            <td>
+                <img src="photo/folder.png" ></td>
+            </tr>
+          </table>
+        
+        
+    </div>
+</body>
+</html>

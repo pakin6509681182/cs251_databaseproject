@@ -186,6 +186,9 @@ def myAddition():
             pets = cursor.fetchall() 
     return render_template('myAddition.html', pets=pets)
 
+@app.route('/statusUser')
+def statusUser():
+    return render_template('StatusUser.html')
 
 if __name__ == '__main__':
     app.run(debug=True)

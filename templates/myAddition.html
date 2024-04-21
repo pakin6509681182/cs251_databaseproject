@@ -13,7 +13,7 @@
             </a>
             <a href="{{ url_for('addition') }}">ADD PET</a>
             <a href="{{ url_for('myAddition') }}">MY ADDITION</a>
-            <a href="status.html">STATUS</a>
+            <a href="{{ url_for('statusUser') }}">STATUS</a>
             {% if session.get('name') %}
                 <a href="{{ url_for('myprofile') }}">Welcome, {{ session['name'] }}!</a>                
                 <a href="{{ url_for('logout') }}">Logout</a>
