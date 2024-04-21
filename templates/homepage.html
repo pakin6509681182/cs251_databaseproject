@@ -86,7 +86,7 @@
                         petList.innerHTML = '';
                         data.forEach(pet => {
                             const petCard = document.createElement('a');
-                            petCard.href = `{{ url_for('petprofile', PetID='${pet.PetID}') }}`;
+                            petCard.href = `/petprofile?PetID=${pet.PetID}`;
                             petCard.classList.add('pet-card');
 
                             // const img = document.createElement('img');

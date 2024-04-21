@@ -235,6 +235,7 @@ def filter_pets():
 
 @app.route('/petprofile')
 def ViewPetProfile():
+    category = request.args.get('PetID')
     return render_template('PetProfile.html')
 
 if __name__ == '__main__':
