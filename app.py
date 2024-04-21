@@ -147,7 +147,7 @@ def logout():
 def addition():
     if 'userID' not in session:
         flash('Please log in first', 'info')
-        #return redirect(url_for('login'))
+        return redirect(url_for('login'))
     if request.method == 'POST':
         petID = str(random.randint(10000, 99999))
         userID = session.get('userID')
@@ -176,14 +176,15 @@ def addition():
 def myAddition():
     if 'userID' not in session:
         flash('Please log in first', 'info')
-        #return redirect(url_for('login'))
+        return redirect(url_for('login'))
     
     userID = session.get('userID')
     
-    with pyodbc.connect(conn_str) as conn:
-        with conn.cursor() as cursor:
-            cursor.execute("SELECT * FROM Pet WHERE userID = ?;", userID)
-            pets = cursor.fetchall() 
+    if request.method == 'GET':
+        with pyodbc.connect(conn_str) as conn:
+            with conn.cursor() as cursor:
+                cursor.execute("SELECT * FROM Pet WHERE userID = ?;", userID)
+                pets = cursor.fetchall() 
     return render_template('myAddition.html', pets=pets)
 
 @app.route('/statusUser')
