@@ -172,5 +172,20 @@ def addition():
         return redirect(url_for('addition'))
     return render_template('addition.html')
 
+@app.route('/myAddition', methods=['GET', 'POST'])
+def myAddition():
+    if 'userID' not in session:
+        flash('Please log in first', 'info')
+        return redirect(url_for('login'))
+    
+    userID = session.get('userID')
+    
+    with pyodbc.connect(conn_str) as conn:
+        with conn.cursor() as cursor:
+            cursor.execute("SELECT * FROM Pet WHERE userID = ?;", userID)
+            pets = cursor.fetchall() 
+    return render_template('myAddition.html', pets=pets)
+
+
 if __name__ == '__main__':
     app.run(debug=True)

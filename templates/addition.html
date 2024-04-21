@@ -14,8 +14,8 @@
           <a href="{{ url_for('homepage') }}">
             <img src="{{ url_for('static', filename='photo/home.png') }}" alt="Home">
             </a>
-            <a href="Addition.html">ADD PET</a>              
-            <a href="MyAddition.html">MY ADDITION</a>
+            <a href="{{ url_for('addition') }}">ADD PET</a>              
+            <a href="{{ url_for('myAddition') }}">MY ADDITION</a>
             <a href="Status.html">STATUS</a>
             {% if session.get('name') %}
                 <a href="{{ url_for('myprofile') }}">Welcome, {{ session['name'] }}!</a>                
