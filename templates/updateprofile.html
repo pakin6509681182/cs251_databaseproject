@@ -11,7 +11,7 @@
     <div class="profile-container">
     <div class="profile-box">
       <h1>Edit Profile</h1>
-      <button class="edit-profile-close-btn" onclick="location.href='homepage.html';"><img src="{{ url_for('static', filename='photo/login/close-icon.png') }}" alt="Home"></button>
+      <button class="edit-profile-close-btn" onclick="location.href='{{url_for('homepage')}}';"><img src="{{ url_for('static', filename='photo/login/close-icon.png') }}" alt="Home"></button>
       <form method="POST" action="{{ url_for('updateprofile') }}">
         <input type="text" id="name" name="name" placeholder="Name" value="{{ session.get('name') }}">
         <input type="text" id="username" name="username" placeholder="Username" value="{{ session.get('username') }}">
