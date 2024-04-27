@@ -17,6 +17,7 @@
             {% if session.get('name') %}
                 <a href="{{ url_for('myprofile') }}">Welcome, {{ session['name'] }}!</a>                
                 <a href="{{ url_for('logout') }}">Logout</a>
+                <a href="chat.html">Chat</a>
             {% else %}
                 <a href="{{url_for('login')}}">Login</a>
             {% endif %}        
