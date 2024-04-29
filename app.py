@@ -249,6 +249,84 @@ def delete(petID):
     
     return redirect(url_for('myAddition'))
 
+@app.route('/UpdatePet/<petID>', methods=['GET', 'POST'])
+def UpdatePet(petID):
+    if 'userID' not in session:
+        flash('Please log in first', 'info')
+        return redirect(url_for('login'))
+    
+    if request.method == 'POST':
+        userID = session.get('userID')
+        foundDate = datetime.now()
+        name = request.form.get('name')
+        breed = request.form.get('breed')
+        size = request.form.get('size')
+        type = request.form.get('type')
+        gender = request.form.get('gender')
+        age = request.form.get('age')
+        behaviour = request.form.get('behaviour')
+        sterilisation = request.form.get('sterilisation')
+        colors = request.form.get('colors')
+        # Location
+        ssn = session.get('ssn')
+        province = request.form.get('province')
+        street = request.form.get('street')
+        zipcode = request.form.get('zipcode')
+        sub_district = request.form.get('sub_district')
+        district = request.form.get('district')
+
+        if not petID:  # If petID is not provided, insert a new record
+            petID = str(random.randint(10000, 99999))  # Generate a new petID
+            upload(petID)  # Upload the photo
+
+        with pyodbc.connect(conn_str) as conn:
+            with conn.cursor() as cursor:
+                cursor.execute("""
+                    IF EXISTS (SELECT 1 FROM Pet WHERE PetID = ?)
+                    BEGIN
+                        UPDATE Pet
+                        SET name = ?, breed = ?, size = ?, gender = ?, age = ?, behaviour = ?, sterilization = ?, hair_color = ?, foundDate = ?
+                        WHERE PetID = ?;
+                    END
+                    ELSE
+                    BEGIN
+                        INSERT INTO Pet (PetID, name, breed, size, gender, age, behaviour, sterilization, hair_color, foundDate, userID, ImageID)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+                    END;
+                """, petID, name, breed, size, gender, age, behaviour, sterilisation, colors, foundDate, petID, petID, name, breed, size, gender, age, behaviour, sterilisation, colors, foundDate, userID, petID)
+
+                cursor.execute("""
+                    IF EXISTS (SELECT 1 FROM FoundPlace WHERE PetID = ?)
+                    BEGIN
+                        UPDATE FoundPlace
+                        SET userID = ?, SSN = ?, Province = ?, Street = ?, Zipcode = ?, Sub_district = ?, district = ?
+                        WHERE PetID = ?;
+                    END
+                    ELSE
+                    BEGIN
+                        INSERT INTO FoundPlace (userID, SSN, PetID, Province, Street, Zipcode, Sub_district, district)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+                    END;
+                """, petID, userID, ssn, province, street, zipcode, sub_district, district, petID, userID, ssn, province, street, zipcode, sub_district, district)
+
+                if type == 'Dog':
+                    cursor.execute("INSERT INTO Dog (PetID) VALUES (?);", petID)
+                elif type == 'Cat':
+                    cursor.execute("INSERT INTO Cat (PetID) VALUES (?);", petID)
+        
+        flash('Animal added successfully', 'success')
+        return redirect(url_for('myAddition'))
+    
+    with pyodbc.connect(conn_str) as conn:
+        with conn.cursor() as cursor:
+            cursor.execute("SELECT * FROM Pet WHERE PetID = ?;", petID)
+            pet = cursor.fetchone()
+            
+            cursor.execute("SELECT * FROM FoundPlace WHERE PetID = ?;", petID)
+            found_place = cursor.fetchone()
+
+    return render_template('UpdatePet.html', pet=pet, found_place=found_place)
+
 
 @app.route('/filter')
 def filter_pets():

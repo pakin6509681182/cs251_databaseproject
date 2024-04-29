@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stray Home</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='UpdatePage.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script> <!-- Include SweetAlert library here -->
+</head>  
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="{{ url_for('homepage') }}">
+                <img src="{{ url_for('static', filename='photo/home.png') }}" alt="Home">
+            </a>
+            <a href="{{ url_for('addition') }}">ADD PET</a>
+            <a href="{{ url_for('myAddition') }}">MY ADDITION</a>
+            <a href="{{ url_for('statusUser') }}">STATUS</a>
+            {% if session.get('name') %}
+                <a href="{{ url_for('myprofile') }}">Welcome, {{ session['name'] }}!</a>                
+                <a href="{{ url_for('logout') }}">Logout</a>
+            {% else %}
+                <a href="{{ url_for('login') }}">Login</a>
+            {% endif %}        
+        </div>
+
+        <!--กล่องใหญ่สีขาว-->
+        <div class="add-pet-container">      
+          <h1>EDITION</h1>
+          <form action="{{ url_for('UpdatePet', petID=pet.PetID) }}" method="POST" enctype="multipart/form-data">
+            <!--photo-->
+            <div class="form-group">
+                <!--ใส่รูป-->
+                <div id="labelphoto"> <label for="photo">Add Photo</label> </div>
+                <div id="selectphoto">
+                  <input type="file" id="photo" name="photo" onchange="previewImage(this)"> <!--ปุ่มเลือกรูป-->
+                  <img id="preview" src="{{ url_for('static', filename='photo/' + pet.PetID|string + '.jpg') }}" alt="Preview" style="max-width: 200px; max-height: 200px;">
+                </div>
+            </div>
+        
+            <!--name-->
+            <div class="form-group">
+                <div id=namelabel> <label for="name">Name</label> </div>
+                <div id=name> <input type="text" id="name" name="name" value="{{ pet.name }}"> </div>
+            </div>
+        
+            <!--breed-->
+            <div class="form-group">
+                <div id=breedlabel> <label for="breed">Breed</label> </div>
+                <div id=breed> <input type="text" id="breed" name="breed" value="{{ pet.breed }}"> </div>
+            </div>
+        
+        
+            <!--size-->
+            <div class="form-group">
+                <div id=sizelabel> <label for="size">Size</label> </div>
+                <div id="size">
+                    <select id="size" name="size">
+                        <option value="small" {% if pet.size == 'small' %} selected {% endif %}>Small</option>
+                        <option value="medium" {% if pet.size == 'medium' %} selected {% endif %}>Medium</option>
+                        <option value="large" {% if pet.size == 'large' %} selected {% endif %}>Large</option>
+                        <option value="{{ pet.size}}" {% if pet.size != 'small' and pet.size != 'medium' and pet.size != 'large' %} selected {% endif %}>{{pet.size}}</option>
+                    </select>
+                </div>
+            </div>
+        
+            <!--type-->
+            <div class="form-group">
+                <div id=typelabel><label for="type">Type</label> </div>
+                <div id=type><select id="type" name="type">
+                        <option value="cat" {% if pet.type == 'cat' %} selected {% endif %}>Cat</option>
+                        <option value="dog" {% if pet.type == 'dog' %} selected {% endif %}>Dog</option>
+                    </select>
+                </div>
+            </div>
+        
+            <!--gender-->
+            <div class="form-group">
+                <div id=genderlabel> <label for="gender">Gender</label> </div>
+                <div id=gender> <select id="gender" name="gender">
+                        <option value="male" {% if pet.gender == 'male' %} selected {% endif %}>Male</option>
+                        <option value="female" {% if pet.gender == 'female' %} selected {% endif %}>Female</option>
+                    </select>
+                </div>
+            </div>
+        
+            <!--อายุ-->
+            <div class="form-group">
+                <div id=agelabel><label for="age">Age</label></div>
+                <div id=age><select id="age" name="age">
+                        <option value="less-12-months" {% if pet.age == 'less-12-months' %} selected {% endif %}>Less than 12 months</option>
+                        <option value="12-60-months" {% if pet.age == '12-60-months' %} selected {% endif %}>12-60 months</option>
+                        <option value="more-60-months" {% if pet.age == 'more-60-months' %} selected {% endif %}>More than 60 months</option>
+                    </select>
+                </div>
+            </div>
+        
+            <!--behavior-->
+            <div class="form-group">
+                <div id=behaviorlabel><label for="behavior">Behavior</label></div>
+                <div id=behavior><input type="text" id="behavior" name="behavior" value="{{ pet.behaviour }}"></div>
+            </div>
+        
+            <!--ster-->
+            <div class="form-group">
+                <div id=sterlabel><label for="sterilzation">Sterilzation</label></div>
+                <div id=ster><select id="sterilzation" name="sterilzation">
+                        <option value="yes" {% if pet.sterilization == 'yes' %} selected {% endif %}>Yes</option>
+                        <option value="no" {% if pet.sterilization == 'no' %} selected {% endif %}>No</option>
+                        <option value="unknown" {% if pet.sterilization == 'unknown' %} selected {% endif %}>Unknown</option>
+                    </select>
+                </div>
+            </div>
+        
+            <!--colors-->
+            <div class="form-group">
+                <div id=colorlabel><label for="colors">Colors</label></div>
+                <div id=color><select id="colors" name="colors">
+                        <option value="black" {% if pet.hair_color == 'black' %} selected {% endif %}>Black</option>
+                        <option value="grey" {% if pet.hair_color == 'grey' %} selected {% endif %}>Grey</option>
+                        <option value="brown" {% if pet.hair_color == 'brown' %} selected {% endif %}>Brown</option>
+                        <option value="red" {% if pet.hair_color == 'red' %} selected {% endif %}>Red</option>
+                        <option value="orange" {% if pet.hair_color == 'orange' %} selected {% endif %}>Orange</option>
+                        <option value="other" {% if pet.hair_color == 'other' %} selected {% endif %}>Other</option>
+                    </select>
+                </div>
+            </div>
+        
+            <!--province-->
+            <div class="form-group">
+              <div id=provincelabel> <label for="province">Province</label>   </div>              
+              <div id=province> <input type="text" id="province" name="province" value="{{ found_place.Province }}"> </div>
+            </div>
+
+            <!--street-->
+            <div class="form-group">
+              <div id=streetlabel> <label for="street">Street</label>   </div>              
+              <div id=street> <input type="text" id="street" name="street" value="{{ found_place.Street }}"> </div>
+            </div>
+
+            <!--district-->
+            <div class="form-group">
+              <div id=districtlabel> <label for="district">District</label>   </div>              
+              <div id=district> <input type="text" id="district" name="district" value="{{ found_place.district }}"> </div>
+            </div>
+
+            <!--sub district-->
+            <div class="form-group">
+              <div id=sub_districtlabel> <label for="sub_district">Sub_district</label>   </div>              
+              <div id=sub_district> <input type="text" id="sub_district" name="sub_district" value="{{ found_place.Sub_district }}"> </div>
+            </div>
+
+            <!--zipcode-->
+            <div class="form-group">
+              <div id=zipcodelabel> <label for="zipcode">Zipcode</label>   </div>              
+              <div id=zipcode> <input type="text" id="zipcode" name="zipcode" value="{{ found_place.Zipcode }}"> </div>
+            </div>
+
+        
+            <!--ปุ่มupdate-->
+            <div id="add">
+                <button type="submit">UPDATE</button>
+            </div>
+        
+        </form>
+      </div>
+      
+    </div>
+
+    <script>
+      function previewImage(input) {
+          var preview = document.getElementById('preview');
+          if (input.files && input.files[0]) {
+              var reader = new FileReader();
+              reader.onload = function(e) {
+                  preview.src = e.target.result;
+                  preview.style.display = 'block';
+              }
+              reader.readAsDataURL(input.files[0]);
+          } else {
+              preview.src = '#';
+              preview.style.display = 'block';  // Always display the preview
+          }
+      }
+  </script>
+  
+    
+</body>
+
+</html>

@@ -37,8 +37,9 @@
                     <img src="/static/photo/{{ pet.ImageID if pet.ImageID else 'pet_image_1' }}.jpg" alt="{{ pet.name }} Image">
                     <p>{{ pet.name }} {% if pet.gender == 'female' %}&female;{% else %}&male;{% endif %}</p>
                     <div class="actions">
-                        <a href="UpDatePage.html" class="edit">&#9998;</a>      <!-- ปุ่มแก้ไข เชื่อมไปหน้าอัพเดต -->
-                        <a class="delete" data-petid="{{ pet.PetID }}" >&#10005;</a>                          <!-- ปุ่มลบ -->
+                        <a href="{{ url_for('UpdatePet', petID=pet.PetID) }}" class="edit">&#9998;</a>
+                        <a class="delete" data-petid="{{ pet.PetID }}" >&#10005;</a>
+                          <!-- ปุ่มลบ -->
                     </div>
                 </div>
             {% endfor %}
