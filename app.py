@@ -235,7 +235,15 @@ def delete(petID):
     with pyodbc.connect(conn_str) as conn:
         with conn.cursor() as cursor:
             cursor.execute("""
-                DECLARE @PetID INT = ?;
+            DECLARE @PetID INT = ?;
+            DECLARE @Message NVARCHAR(255);
+            IF EXISTS (SELECT 1 FROM UserRequest WHERE PetID = @PetID)
+            BEGIN
+                -- Set message if PetID exists in UserRequest table
+                SET @Message = 'Pet is currently in Request Pending.';
+            END
+            ELSE
+            BEGIN
                 DELETE FROM FoundPlace WHERE PetID = @PetID;
                 IF EXISTS (SELECT 1 FROM Cat WHERE PetID = @PetID)
                 BEGIN
@@ -246,7 +254,15 @@ def delete(petID):
                     DELETE FROM Dog WHERE PetID = @PetID;
                 END
                 DELETE FROM Pet WHERE PetID = @PetID;
+                SET @Message = 'Pet deleted successfully.';
+            END
+            
+            SELECT @Message AS Message
             """, petID)
+            row = cursor.fetchone()
+            if row:
+                message = row.Message
+            flash(message, 'error')
     
     return redirect(url_for('myAddition'))
 
