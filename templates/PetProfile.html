@@ -42,10 +42,71 @@
       <div class="behavior">
         <p >Behavior: {{ pet_data['behaviour'] }}</p>
       </div>
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLSdpH1smKIB1CUcGKPsyOBhNZ-D9-N4rxIOyXRNmq8usBYJewQ/viewform">
-        <button class="adopt-btn">ADOPT</button>
-      </a>    
+        <button class="adopt-btn" onclick="adoptPet()">ADOPT</button>   
     </div>
   </div>
+
+  <script>
+    function adoptPet() {
+        // Get the petID from the URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const petData = JSON.parse(decodeURIComponent(urlParams.get('pet_data')));
+        const petID = petData.PetID;
+
+        // Send petID to Flask app
+        fetch('/adopt', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                petID: petID,
+            })
+        }).then(response => {
+            if (response.ok) {
+                // window.open('https://docs.google.com/forms/d/e/1FAIpQLSdpH1smKIB1CUcGKPsyOBhNZ-D9-N4rxIOyXRNmq8usBYJewQ/viewform', '_blank');
+            }
+        }).catch(error => {
+            console.error('Error:', error);
+        });
+    }
+</script>
+
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+        <script>
+          if ('{{ category }}' == 'success') {
+            Swal.fire({
+              icon: 'success',
+              title: '{{ message }}',
+              showConfirmButton: true
+            })
+
+          } else if ('{{ category }}' == 'error') {
+            Swal.fire({
+              icon: 'error',
+              title: '{{ message }}',
+              showConfirmButton: true
+            })
+
+          } else if ('{{ category }}' == 'info') {
+    Swal.fire({
+        icon: 'info',
+        title: '{{ message }}',
+        showConfirmButton: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = "{{ url_for('login') }}";
+        }
+    })
+}
+          
+        </script>
+        {% endfor %}
+    {% endif %}
+    {% endwith %}
+
 </body>
 </html>

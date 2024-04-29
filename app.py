@@ -418,6 +418,49 @@ def PetProfile():
     pet_data = json.loads(request.args.get('pet_data'))
     return render_template('PetProfile.html', pet_data=pet_data)
 
+@app.route('/adopt', methods=['POST'])
+def adopt_pet():
+
+    if 'userID' not in session:
+        flash('Please log in first', 'info')
+        print("Login")
+        return redirect(url_for('login'))
+    
+    data = request.json
+    petID = data['petID']
+    userID = session.get('userID')
+    requestID = str(random.randint(10000, 99999))
+    date = datetime.now().strftime('%Y-%m-%d')
+    approve = 0
+    
+    print('userID : ',userID)
+    print('petid : ', petID)
+    
+    if request.method == 'POST':
+        with pyodbc.connect(conn_str) as conn:
+            with conn.cursor() as cursor:
+                 # Check if petID and userID already exist in UserRequest table
+                cursor.execute("SELECT COUNT(*) FROM UserRequest WHERE PetID = ? AND userID = ?", petID, userID)
+                if cursor.fetchone()[0] > 0:
+                    flash('Adoption request for this pet already exists.', 'error')
+                    print("Exists")
+                    return redirect(url_for('homepage'))
+                else:
+                    cursor.execute("""  
+                    DECLARE @SSN VARCHAR(17);
+                    SET @SSN = (SELECT [User].SSN FROM [User] WHERE userID = ?)           
+                        
+                    INSERT INTO UserRequest (requestID,userID,SSN,PetID,[date],approve_request)
+                    VALUES (?,?,@SSN,?,?,?);           
+                                
+                    """,userID,requestID,userID,petID,date,approve)
+                    print("Success")
+                    flash('Your adoption request has been submitted.', 'success')    
+    print("Finish")
+    return redirect(url_for('homepage'))                
+    
+
+
 @app.route('/statusUser', methods=['GET', 'POST'])
 def statusUser():
     if 'userID' not in session:
