@@ -83,9 +83,10 @@ def login():
                     if admin:
                         session['role'] = 'admin'
                         print("admin")
+                        flash('Admin Login successful', 'question')
                     else:
                         session['role'] = 'user'
-                    flash('Login successful', 'success')
+                        flash('Login successful', 'success')
                     return redirect(url_for('login'))
                 else:
                     flash('Invalid username or password', 'error')
