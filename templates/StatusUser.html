@@ -27,36 +27,61 @@
         <div class="stary-pets-label">ALL MY REQUEST</div>
 
         <table>
-            <tr>
+          <tr>
               <th>PET</th>
               <th>DATE</th>
               <th>STATUS</th>
               <th>FILE</th>
-            </tr>
-            <tr>
-              <td>ITIM</td>
-              <td>01 JAN 2024</td>
-              <td>PROCESSING</td>
-              <td><a href="PermissionFormUser.html">
-                <img src="photo/folder.png" >
-              </a></td>
-            </tr>
-            <tr>
-              <td>ICHAM</td>
-              <td>01 JAN 2023</td>
-              <td>ADOPTED</td>
-              <td><img src="photo/folder.png"></td>
-            </tr>
-            <tr>
-              <td>SOM</td>
-              <td>01 FEB 2023</td>
-              <td>REJECTED</td>
-            <td>
-                <img src="photo/folder.png" ></td>
-            </tr>
-          </table>
-        
-        
+          </tr>
+          {% for pet in pets %}
+          <tr>
+              <td>{{ pet.name }}</td>
+              <td>{{ pet.date }}</td>
+              <td>{{ 'Approved' if pet.approve_request else 'Pending' }}</td>
+              <td>
+                  <a href="{{url_for('PermissionFormUser') }}">
+                      <img src="{{ url_for('static', filename='photo/folder.png') }}">
+                  </a>
+              </td>
+          </tr>
+          {% endfor %}
+      </table>
     </div>
+
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+        <script>
+          if ('{{ category }}' == 'success') {
+            Swal.fire({
+              icon: 'success',
+              title: '{{ message }}',
+              showConfirmButton: true
+            })
+
+          } else if ('{{ category }}' == 'error') {
+            Swal.fire({
+              icon: 'error',
+              title: '{{ message }}',
+              showConfirmButton: true
+            })
+
+          } else if ('{{ category }}' == 'info') {
+    Swal.fire({
+        icon: 'info',
+        title: '{{ message }}',
+        showConfirmButton: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = "{{ url_for('login') }}";
+        }
+    })
+}
+          
+        </script>
+        {% endfor %}
+    {% endif %}
+    {% endwith %}
 </body>
 </html>

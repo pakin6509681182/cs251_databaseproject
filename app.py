@@ -197,10 +197,6 @@ def myAddition():
                 pets = cursor.fetchall() 
     return render_template('myAddition.html', pets=pets)
 
-@app.route('/statusUser')
-def statusUser():
-    return render_template('StatusUser.html')
-
 @app.route('/filter')
 def filter_pets():
     category = request.args.get('category')
@@ -274,6 +270,30 @@ def PetProfile():
     pet_data = json.loads(request.args.get('pet_data'))
     return render_template('PetProfile.html', pet_data=pet_data)
 
+@app.route('/statusUser', methods=['GET', 'POST'])
+def statusUser():
+    if 'userID' not in session:
+        flash('Please log in first', 'info')
+        return redirect(url_for('login'))
+    
+    userID = session.get('userID')
+    print("userID:", userID)
+    
+    if request.method == 'GET':
+        with pyodbc.connect(conn_str) as conn:
+            with conn.cursor() as cursor:
+                cursor.execute("""
+                    SELECT Pet.name, UserRequest.date, UserRequest.approve_request
+                    FROM UserRequest
+                    JOIN Pet ON UserRequest.PetID = Pet.PetID
+                    WHERE UserRequest.userID = ?;
+                """, userID)
+                pets = cursor.fetchall() 
+    return render_template('StatusUser.html', pets=pets)
+
+@app.route('/PermissionFormUser')
+def PermissionFormUser():
+    return render_template('PermissionFormUser.html',)
 
 if __name__ == '__main__':
     app.run(debug=True)

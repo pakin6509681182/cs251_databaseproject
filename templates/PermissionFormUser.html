@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pet Adoption</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='PermissionFormUser.css')}}">
+</head>
+<body>
+  <div class="containerInfo">
+    
+        <a href="homepage.html">
+          
+            <img src="{{ url_for('static', filename='photo/back.png')}}" alt="Home">
+        </a>
+        <div class = "back-button" onclick="backToGallery()">
+          <i class = "fas fa-arrow-left"></i>
+        </div>
+        
+        <div class = "HouseImages">
+        <img src = "{{ url_for('static', filename='photo/house1.jpg')}}" alt="House Image" id="mainHouse" > 
+        </div>
+
+    <div class = "house-info">
+      <h1>PERMISSION FORM</h1>
+      <div class="location-container">
+        <img src="{{ url_for('static', filename='photo/location.png')}}"> 
+        <div class="address">Muang Phuket</div>
+    </div>
+
+    
+    <div class="publish-status-block">
+      <div class="publish-alert"> 
+       <!-- <img src="profile_pic.jpg" alt="Profile Picture" -->
+       <img src = "{{ url_for('static', filename='photo/profile.png')}}" alt = "Profile picture">
+       <!-- Display the user's name-->
+       <span>Pornlada Boonthum</span><br>
+       <div class="publishStatus">Publish this alert</div>
+       <!-- <p>Publish this alert</p> -->
+       </div>
+
+       <div class = "status"> 
+        <img src = "{{ url_for('static', filename='photo/email.png')}}" alt = "Status picture">
+        <!-- display the status of their request-->
+        <span>Pending</span>
+      </div>
+      </div>
+
+      
+
+      <div class="Permission_pet-info">
+          <img src="{{ url_for('static', filename='photo/pet_image_1.jpg')}}" alt="image of the adopted pet">
+        
+
+        <div class="pet-short-info">
+          <div style="font-size: 30px;"><b>ITIM</b></div><br><br>
+          <!-- Display the breed, gender, sterlize -->
+          SOKOKE | FEMALE | STERILIZED
+        </div>
+      </div>
+
+
+      
+      <div class="size-age-colors">Size: 4.2 KG  Age: 12 - 60 MONTHS  Colors: <span class="color-orange"></span></div>
+      <div class="Permission-behavior">Behavior: She is particularly sociable, relatively high in friendliness and low in aloofness and shyness</div>
+    
+    
+      <button class="delete-btn" onclick="confirmDelete()">DELETE</button>
+
+
+    </div> 
+    </div>
+
+      <!-- Popup Confirm Delete -->
+      <div id="confirmPopup" class="popup" style="display: none;">
+        <div class="popup-content">
+          <h2>ARE YOU SURE </h2>
+            <div align-items: center; > To delete the request </div><br>
+            <button class="no-btn" onclick="closePopup()">No</button>
+            <button class="cfdelete-btn" onclick="deleteRequest()">Delete</button>
+             </div>
+      </div>
+
+    <script>
+      function confirmDelete() {
+        document.getElementById("confirmPopup").style.display = "flex";
+        document.getElementById("confirmPopup").style.alignItems = "center";
+        document.getElementById("confirmPopup").style.justifyContent = "center";
+    }
+    
+    function closePopup() {
+        document.getElementById("confirmPopup").style.display = "none";
+    }
+    
+    function deleteRequest() {
+        // Add logic to delete the request here
+        closePopup();
+    }
+    
+    </script>
+
+
+
+    
+</body>
+</html>

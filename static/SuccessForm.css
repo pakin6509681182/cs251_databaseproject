@@ -1,0 +1,190 @@
+
+/* PermissionForm */
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #FFEDA6; 
+}
+
+.containerInfo {
+  display: flex;
+  align-items: flex-start;
+}
+
+.containerInfo img{
+  margin-top: 20px;
+  margin-left: 10px;
+}
+
+h1{
+  font-size: 55px;
+  margin-bottom: -30px;
+}
+
+
+#mainHouse{
+  width: 65%; 
+  height: 100%;
+  position: relative;
+  z-index: -2;
+  /*
+  width: 65%; 
+  height: 50%;
+  height: 100vh;*/ 
+}
+
+.HouseImages{
+  z-index: -4;
+  margin-left: -50px;
+  margin-top: -20px;
+  height: 105vh;
+  width:80vw;
+}
+
+.HouseImages img{
+  position: relative;
+}
+
+.location-icon img{
+  width: 60%; 
+  height: auto;
+  }
+
+.house-info{
+    z-index: 1;
+    background-color: #fff;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 50px;
+    margin-left: -450px;
+    padding: 20px;
+    position: relative;
+    height: 100vh;
+}
+
+.location-container {
+  display: flex; /* ให้ container เป็น Flexbox */
+  align-items: center; /* จัดให้ภาพและข้อความอยู่กึ่งกลางตามแนวแกนตั้ง */
+  margin-top: 30px;
+}
+
+.location-container img {
+  width: 50px; 
+  height: auto;
+}
+
+.address {
+  font-size: 18px;
+  display: flex; /* ให้ข้อความเป็น Flexbox */
+  align-items: center; /* จัดให้ข้อความอยู่กึ่งกลางตามแนวแกนตั้ง */
+  font-weight: bold;
+  margin-left: 10px;
+  margin-top: 20px;
+}
+
+.publish-alert {
+  display: flex;
+  align-items: center;
+  margin-top: -40px;
+}
+
+.publish-alert img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.publish-alert span {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.publishStatus{
+  margin-top: 40px;
+  margin-left: -193px;
+  font-size: 1.0rem;
+}
+
+.status{
+  display: flex;
+  align-items: center;
+}
+
+.status span{
+  font-size: 1.2rem;
+  margin-right: 10px;
+  margin-left: 10px;
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+.status img{
+  width: 50px; 
+  height: auto;
+}
+
+.Permission_pet-info {
+  display: flex;
+  width: 700px;
+  height: 100px;
+  background-color: #ffde59;
+  border-radius: 80px; /* ปรับค่านี้เพื่อเปลี่ยนรูปร่างของวงรีโค้ง */ 
+  align-items: center;
+  margin-bottom: -250px;
+}
+
+.Permission_pet-info img{
+  border-radius: 50%;
+  width: 100px; 
+  height: 100px;
+  align-items: flex-start;
+  position: relative;
+  top: -10px;
+  left: -15px;
+}
+
+.pet-short-info{
+  flex: 1;
+  display: flex;
+  text-align: right;
+  margin-left: 20px;
+}
+
+.breed-gender-sterilize {
+  background-color: #ffbf00;
+  display: flex;
+  border-radius: 20cm;
+  width: 500px;
+  height: 50px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.size-age-colors {
+  display: flex;
+  font-size: 18px;
+  margin-top: 260px;
+  margin-bottom: -10px;
+}
+
+.color-orange {
+  background-color: orange;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-left: 10px;
+}
+
+.Permission-behavior {
+  margin-bottom: 150px;
+  font-size: 18px;
+}
+
