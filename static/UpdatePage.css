@@ -1,4 +1,4 @@
-/*Addition*/
+/*Edition*/
 
 body {                      /*สีbg*/
     font-family: Arial, sans-serif;
@@ -9,6 +9,7 @@ body {                      /*สีbg*/
 
 .container {                /*ทำให้เมนูอยู่ตรงกลางหน้า*/
     max-width: 960px;
+    
     margin: 0 auto;
     padding: 20px;
 }
@@ -56,15 +57,6 @@ body {                      /*สีbg*/
     border: 3px solid #908f8f;                                /* ความหนาเส้นกรบและสี */
     text-align: center;
   }
-
-  #preview img {
-    position: relative; /* กำหนดให้รูปภาพอยู่ในตำแหน่งที่ต้องการภายในกล่องเลือกรูป */
-    top: 50%; /* จัดให้ส่วนบนของรูปอยู่ที่ 50% ของกล่องเลือกรูป */
-    left: 50%; /* จัดให้ส่วนซ้ายของรูปอยู่ที่ 50% ของกล่องเลือกรูป */
-    transform: translate(-50%, -50%); /* ย้ายรูปภาพไปที่ตำแหน่งกลางของกล่องเลือกรูป */
-    max-width: 100%; /* กำหนดความกว้างสูงสุดของรูปภาพเพื่อไม่ให้เกินขอบเขตของกล่องเลือกรูป */
-    max-height: 100%; /* กำหนดความสูงสูงสุดของรูปภาพเพื่อไม่ให้เกินขอบเขตของกล่องเลือกรูป */
-}
 
   #namelabel{
     position: relative;
@@ -173,7 +165,7 @@ body {                      /*สีbg*/
     width: 200px;                                               
     height: 50px;
     position: relative;                                         
-    top: -590px;  
+    top: -590px;
     bottom: 200px;
     left: 130px;
   }
@@ -326,26 +318,23 @@ body {                      /*สีbg*/
     background-size: 12px;
   }
   
-  /*ปรับปุ่ม add*/
-  #add button[type="submit"] {
-    width: 80px;
-    height: 30px;                                /* ปรับความสูงของปุ่ม */
-    position: relative;
-    left: 600px;                                
-    padding: 10px;
-    background-color: #aeaeae;
-    color: #000000;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;       /* เพิ่มการเปลี่ยนสีอย่างนุ่มนวล */
-    top: -160px;
-  }
-  
-  #add button[type="submit"]:hover {
-    background-color: #4f4f4f;                  /* สีเมื่อ hover */
-    color: #ffffff;
-  }
-  
+  /*ปรับปุ่ม update*/
+#add button[type="submit"] {
+  width: 80px;
+  height: 30px;                                /* ปรับความสูงของปุ่ม */
+  position: relative;
+  left: 600px;
+  padding: 10px;
+  background-color: #aeaeae;
+  color: #000000;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;       /* เพิ่มการเปลี่ยนสีอย่างนุ่มนวล */
+  top: -160px;
+}
 
-  
+#add button[type="submit"]:hover {
+  background-color: #4f4f4f;                  /* สีเมื่อ hover */
+  color: #ffffff;
+}
