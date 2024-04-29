@@ -71,6 +71,17 @@
             }
         })
       }
+      else if ('{{ category }}' == 'question'){
+        Swal.fire({
+          icon: 'warning',
+          title: '{{ message }}',
+          confirmButtonText: 'Go to Status Page'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = "{{ url_for('statusUser') }}";
+          }
+        })
+      }
   </script>
     {% endfor %}
 {% endif %}
