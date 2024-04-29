@@ -97,6 +97,7 @@ def register():
             with pyodbc.connect(conn_str) as conn:
                 with conn.cursor() as cursor:
                     cursor.execute("INSERT INTO [User] (userID,name, username, pwd, ssn,birthDate,gender) VALUES (?,?,?,?,?,?,?);", userID,name, username, password, ssn,birth,gender)
+                    cursor.execute("INSERT INTO Member (userID,SSN) VALUES (?,?);", userID, ssn)
             flash('Registration successful', 'success')
         except Exception as e:
             flash('An error occurred: ' + str(e), 'error')
