@@ -161,9 +161,18 @@ def addition():
         behaviour = request.form.get('behaviour')
         sterilisation = request.form.get('sterilisation')
         colors = request.form.get('colors')
+        #location
+        ssn = session.get('ssn')
+        province = request.form.get('province')
+        street = request.form.get('street')
+        zipcode = request.form.get('zipcode')
+        sub_district = request.form.get('sub_district')
+        district = request.form.get('district')
+
         with pyodbc.connect(conn_str) as conn:
             with conn.cursor() as cursor:
                 cursor.execute("INSERT INTO Pet (PetID,name, breed, size, gender, age, behaviour, sterilization, hair_color,foundDate,userID) VALUES (?,?,?,?,?,?,?,?,?,?,?);",petID, name, breed, size, gender, age, behaviour, sterilisation, colors, foundDate,userID)
+                cursor.execute("INSERT INTO FoundPlace (userID , SSN , PetID , Province , Street , Zipcode , Sub_district , district) VALUES (?,?,?,?,?,?,?,?);",userID, ssn, petID, province, street, zipcode, sub_district, district)
                 if type == 'Dog':
                     cursor.execute("INSERT INTO Dog (PetID) VALUES (?);", petID)
                 elif type == 'Cat':
