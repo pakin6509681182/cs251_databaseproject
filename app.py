@@ -218,6 +218,27 @@ def myAddition():
                 pets = cursor.fetchall() 
     return render_template('myAddition.html', pets=pets)
 
+@app.route('/delete/<petID>', methods=['GET', 'POST'])
+def delete(petID):
+    with pyodbc.connect(conn_str) as conn:
+        with conn.cursor() as cursor:
+            cursor.execute("""
+                DECLARE @PetID INT = ?;
+                DELETE FROM FoundPlace WHERE PetID = @PetID;
+                IF EXISTS (SELECT 1 FROM Cat WHERE PetID = @PetID)
+                BEGIN
+                    DELETE FROM Cat WHERE PetID = @PetID;
+                END
+                IF EXISTS (SELECT 1 FROM Dog WHERE PetID = @PetID)
+                BEGIN
+                    DELETE FROM Dog WHERE PetID = @PetID;
+                END
+                DELETE FROM Pet WHERE PetID = @PetID;
+            """, petID)
+    
+    return redirect(url_for('myAddition'))
+
+
 @app.route('/filter')
 def filter_pets():
     category = request.args.get('category')
