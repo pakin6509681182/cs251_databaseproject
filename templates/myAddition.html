@@ -31,10 +31,10 @@
 
         <div class="pet-list">
             {% for pet in pets %}
-            <div class="pet-card">
-                <img src="{{ pet.image_url }}" alt="{{ pet.name }} Image">
-                <p>{{ pet.name }} {% if pet.gender == 'female' %}&female;{% else %}&male;{% endif %}</p>
-            </div>
+                <div class="pet-card">
+                    <img src="/static/photo/{{ pet.ImageID if pet.ImageID else 'pet_image_1' }}.jpg" alt="{{ pet.name }} Image">
+                    <p>{{ pet.name }} {% if pet.gender == 'female' %}&female;{% else %}&male;{% endif %}</p>
+                </div>
             {% endfor %}
         </div>
     </div>

@@ -16,8 +16,8 @@
       <i class="fas fa-arrow-left"></i>
     </div>
     <div class="PetImages">
-      <img src="{{ url_for('static', filename='photo/pet_image_1.jpg') }}" alt="Pet Image" id="mainPet"> 
-    </div>
+      <img src="{{ url_for('static', filename='photo/' + (pet_data['ImageID'] if pet_data.get('ImageID') else 'pet_image_1') + '.jpg') }}" alt="Pet Image" id="mainPet"> 
+  </div>  
     <div class="pet-info">
       <h1 class="pet-name">{{ pet_data['name'] }}</h1>
       <p class="found-date">Found Date: {{ pet_data['foundDate'] }}</p>

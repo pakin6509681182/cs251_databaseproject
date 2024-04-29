@@ -98,10 +98,10 @@
                             petCard.href = `/petprofile?PetID=${pet.PetID}`;
                             petCard.classList.add('pet-card');
 
-                            // const img = document.createElement('img');
-                            // img.src = pet.image;
-                            // img.alt = `${pet.name} Image`;
-                            // petCard.appendChild(img);
+                            const img = document.createElement('img');
+                            img.src = `/static/photo/${pet.ImageID ? pet.ImageID : 'pet_image_1'}.jpg`;
+                            img.alt = `${pet.name} Image`;
+                            petCard.appendChild(img);
 
                             const p = document.createElement('p');
                             p.innerHTML = `${pet.name} ${pet.gender === 'female' ? '<span>&female;</span>' : '<span>&male;</span>'}`;
