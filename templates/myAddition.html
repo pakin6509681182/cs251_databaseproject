@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Stray Home</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='MyAddition.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script> <!-- Include SweetAlert library here -->
 </head>  
 <body>
@@ -21,22 +21,38 @@
                 <a href="{{ url_for('login') }}">Login</a>
             {% endif %}        
         </div>
-        <div class="welcome">
-            <img src="{{ url_for('static', filename='photo/startpage.jpg') }}" alt="Welcome Image">
-        </div>
         <div class="text-box">
-            <h2>STRAY HOME</h2>
+            <h2>MY ADDITION</h2>
         </div>
-        <div class="stary-pets-label">ALL STRAY PETS</div>
+        
+        <div class="label-box">
+            <div class="stary-pets-label">ALL STARY PETS</div>
+        </div>
+        
+        </div>
 
         <div class="pet-list">
             {% for pet in pets %}
                 <div class="pet-card">
                     <img src="/static/photo/{{ pet.ImageID if pet.ImageID else 'pet_image_1' }}.jpg" alt="{{ pet.name }} Image">
                     <p>{{ pet.name }} {% if pet.gender == 'female' %}&female;{% else %}&male;{% endif %}</p>
+                    <div class="actions">
+                        <a href="UpDatePage.html" class="edit">&#9998;</a>      <!-- ปุ่มแก้ไข เชื่อมไปหน้าอัพเดต -->
+                        <a class="delete" data-petid="{{ pet.PetID }}" >&#10005;</a>                          <!-- ปุ่มลบ -->
+                    </div>
                 </div>
             {% endfor %}
         </div>
+    </div>
+
+    <!--กล่องข้อความเมื่อกดลบ-->
+    <div class="confirm-delete">
+        <div class="confirm-message">
+            <div id=text1>Are you sure</div>
+            <div id=text2>To delete pet profile?</div>
+        </div>
+        <button class="confirm-yes" >Yes</button>
+        <button class="confirm-no">No</button>
     </div>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
@@ -73,6 +89,39 @@
         {% endfor %}
     {% endif %}
     {% endwith %}
+
+    <script>
+        // เมื่อกดปุ่มลบ
+        document.addEventListener("DOMContentLoaded", function() {
+            var deleteButtons = document.querySelectorAll(".delete");
+            var confirmDeleteBox = document.querySelector(".confirm-delete");
+
+            // เพิ่มการรับเหตุการณ์เมื่อคลิกที่ปุมลบ
+            deleteButtons.forEach(function(button) {
+                button.addEventListener("click", function() {
+                    confirmDeleteBox.style.display = "block";
+                    // Get the petID from the data-petid attribute of the clicked delete button
+                    var petID = this.getAttribute('data-petid');
+                    // Set the petID value to the confirmYesButton
+                    confirmYesButton.setAttribute('data-petid', petID);
+                });
+            });
+
+            // เพิ่มการรับเหตุการณ์เมื่อคลิกที่ปุ่ม Yes
+            var confirmYesButton = document.querySelector(".confirm-yes");
+            confirmYesButton.addEventListener("click", function() {
+                confirmDeleteBox.style.display = "none"; // ซ่อนกล่องเมื่อกดปุ่ม Yes
+                var petID = this.getAttribute('data-petid'); // Get the petID from the data-petid attribute
+                window.location.href = "/delete/" + petID; // Redirect to the delete route with the petID
+            });
+
+            // เพิ่มการรับเหตุการณ์เมื่อคลิกที่ปุ่ม No
+            var confirmNoButton = document.querySelector(".confirm-no");
+            confirmNoButton.addEventListener("click", function() {
+                confirmDeleteBox.style.display = "none"; // ซ่อนกล่องเมื่อกดปุ่ม No
+            });
+        });
+    </script>
 
 </body>
 </html>

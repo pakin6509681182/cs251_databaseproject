@@ -3,33 +3,26 @@
 
 <head>
     <title>Stray Home</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='addition.css') }}">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script> <!-- Include SweetAlert library here -->
-  </head>
+    <link rel="stylesheet" type="text/css" href="UpdatePage.css"> <!--เชื่อมกับไฟล์css-->
+</head>
 
 <body>
     <div class="container">   <!--รวมเนื้อหาในหน้าเว็บ-->
 
         <div class="header">  <!--รวมลิงก์ที่ไปยังเว็บต่างๆ-->
-          <a href="{{ url_for('homepage') }}">
-            <img src="{{ url_for('static', filename='photo/home.png') }}" alt="Home">
+            <a href="homepage.html">
+                <img src="photo/home.png" alt="Home">
             </a>
-            <a href="{{ url_for('addition') }}">ADD PET</a>              
-            <a href="{{ url_for('myAddition') }}">MY ADDITION</a>
+            <a href="Addition.html">ADDITION</a>              
+            <a href="MyAddition.html">MY ADDITION</a>
             <a href="Status.html">STATUS</a>
-            {% if session.get('name') %}
-                <a href="{{ url_for('myprofile') }}">Welcome, {{ session['name'] }}!</a>                
-                <a href="{{ url_for('logout') }}">Logout</a>
-            {% else %}
-                <a href="{{url_for('login')}}">Login</a>
-            {% endif %}        
+            <a href="#">Login</a>
         </div>
 
         <!--กล่องใหญ่สีขาว-->
         <div class="add-pet-container">      
-            <h1>ADD PET</h1>
-
-            <form method="POST" action="{{ url_for('addition') }}" enctype=multipart/form-data>
+            <h1>EDITION</h1>
+            <form>
 
               <!--photo-->
               <div class="form-group">                                                       <!--ใส่รูป-->
@@ -37,7 +30,7 @@
                 <div id="selectphoto"> 
                   <input type="file" id="photo" name="photo" onchange="previewImage(this)">   <!--ปุ่มเลือกรูป-->
                   <img id="preview" src="#" alt="Preview" style="display: none; max-width: 200px; max-height: 200px;">
-                </div>    <!--ปุ่มเลือกรูป-->
+                </div>   
               </div>
 
               <!--name-->
@@ -68,8 +61,8 @@
               <div class="form-group">                      
                 <div id=typelabel><label for="type">Type</label> </div>
                 <div id=type><select id="type" name="type">
-                  <option value="Cat">Cat</option>
-                  <option value="Dog">Dog</option>
+                  <option value="cat">Cat</option>
+                  <option value="dog">Dog</option>
                 </select>
                 </div>
               </div>
@@ -97,14 +90,14 @@
 
               <!--behavior-->
               <div class="form-group">                      
-                <div id=behaviorlabel><label for="behaviour">Behavior</label></div>
-                <div id=behavior><input type="text" id="behavior" name="behaviour"></div>
+                <div id=behaviorlabel><label for="behavior">Behavior</label></div>
+                <div id=behavior><input type="text" id="behavior" name="behavior"></div>
               </div>
 
               <!--ster-->
               <div class="form-group">
-                <div id=sterlabel><label for="sterilsation">Sterilzation</label></div>
-                <div id=ster><select id="sterilsation" name="sterilisation">
+                <div id=sterlabel><label for="sterilzation">Sterilzation</label></div>
+                <div id=ster><select id="sterilzation" name="sterilzation">
                   <option value="yes">Yes</option>
                   <option value="no">No</option>
                   <option value="unknow">Unknow</option>
@@ -116,14 +109,16 @@
               <div class="form-group">
                 <div id=colorlabel><label for="colors">Colors</label></div>
                 <div id=color><select id="colors" name="colors">
-                  <option value="all">All</option>
+                  <option value="black">Black</option>
+                  <option value="grey">Grey</option>
                   <option value="brown">Brown</option>
+                  <option value="red">Red</option>
                   <option value="orange">Orange</option>
-                  <option value="white">White</option>
-                  <option value="Black">Black</option>
+                  <option value="other">Other</option>
                 </select>
-                </div>
               </div>
+              </div>
+
               <!--province-->
               <div class="form-group">
                 <div id=provincelabel> <label for="province">Province</label>   </div>              
@@ -154,48 +149,15 @@
                 <div id=zipcode> <input type="text" id="zipcode" name="zipcode"> </div>
               </div>
 
-              <!--ปุ่มadd-->
+
+              <!--ปุ่มupdate-->
               <div id="add">
-                <button type="submit">ADD</button>
+                <button type="submit">UPDATE</button>
               </div>
 
             </form>
           </div>
     </div>
-    {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-        {% for category, message in messages %}
-        <script>
-          if ('{{ category }}' == 'success') {
-            Swal.fire({
-              icon: 'success',
-              title: '{{ message }}',
-              showConfirmButton: true
-            })
-
-          } else if ('{{ category }}' == 'error') {
-            Swal.fire({
-              icon: 'error',
-              title: '{{ message }}',
-              showConfirmButton: true
-            })
-
-          } else if ('{{ category }}' == 'info') {
-    Swal.fire({
-        icon: 'info',
-        title: '{{ message }}',
-        showConfirmButton: true
-    }).then((result) => {
-        if (result.isConfirmed) {
-            window.location.href = "{{ url_for('login') }}";
-        }
-    })
-}
-          
-        </script>
-        {% endfor %}
-    {% endif %}
-    {% endwith %}
 
     <script>
       function previewImage(input) {
@@ -213,6 +175,7 @@
           }
       }
   </script>
+    
 </body>
 
 </html>

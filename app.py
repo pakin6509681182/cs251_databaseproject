@@ -1,3 +1,4 @@
+import os
 from flask import Flask, json, jsonify, render_template, request, redirect, url_for ,flash,session
 import pyodbc
 from flask_bcrypt import Bcrypt
@@ -161,6 +162,7 @@ def addition():
     if 'userID' not in session:
         flash('Please log in first', 'info')
         return redirect(url_for('login'))
+    
     if request.method == 'POST':
         petID = str(random.randint(10000, 99999))
         userID = session.get('userID')
@@ -181,18 +183,37 @@ def addition():
         zipcode = request.form.get('zipcode')
         sub_district = request.form.get('sub_district')
         district = request.form.get('district')
+        
+        # Call the upload function
+        upload(petID)
 
         with pyodbc.connect(conn_str) as conn:
             with conn.cursor() as cursor:
-                cursor.execute("INSERT INTO Pet (PetID,name, breed, size, gender, age, behaviour, sterilization, hair_color,foundDate,userID) VALUES (?,?,?,?,?,?,?,?,?,?,?);",petID, name, breed, size, gender, age, behaviour, sterilisation, colors, foundDate,userID)
-                cursor.execute("INSERT INTO FoundPlace (userID , SSN , PetID , Province , Street , Zipcode , Sub_district , district) VALUES (?,?,?,?,?,?,?,?);",userID, ssn, petID, province, street, zipcode, sub_district, district)
+                cursor.execute("INSERT INTO Pet (PetID,name, breed, size, gender, age, behaviour, sterilization, hair_color,foundDate,userID,ImageID) VALUES (?,?,?,?,?,?,?,?,?,?,?,?);", petID, name, breed, size, gender, age, behaviour, sterilisation, colors, foundDate, userID, petID)
+                cursor.execute("INSERT INTO FoundPlace (userID , SSN , PetID , Province , Street , Zipcode , Sub_district , district) VALUES (?,?,?,?,?,?,?,?);", userID, ssn, petID, province, street, zipcode, sub_district, district)
                 if type == 'Dog':
                     cursor.execute("INSERT INTO Dog (PetID) VALUES (?);", petID)
                 elif type == 'Cat':
                     cursor.execute("INSERT INTO Cat (PetID) VALUES (?);", petID)
+        
         flash('Animal added successfully', 'success')
         return redirect(url_for('addition'))
+    
     return render_template('addition.html')
+
+def upload(petID):
+    if 'photo' not in request.files:
+        return 'No file part'
+    
+    photo = request.files['photo']
+
+    if photo.filename == '':
+        return 'No selected file'
+
+    if photo:
+        filename = str(petID)  # Convert petID to string
+        photo.save(os.path.join('static/photo', f'{filename}.jpg'))
+        return 'File uploaded successfully'
 
 @app.route('/myAddition', methods=['GET', 'POST'])
 def myAddition():
@@ -208,6 +229,27 @@ def myAddition():
                 cursor.execute("SELECT * FROM Pet WHERE userID = ?;", userID)
                 pets = cursor.fetchall() 
     return render_template('myAddition.html', pets=pets)
+
+@app.route('/delete/<petID>', methods=['GET', 'POST'])
+def delete(petID):
+    with pyodbc.connect(conn_str) as conn:
+        with conn.cursor() as cursor:
+            cursor.execute("""
+                DECLARE @PetID INT = ?;
+                DELETE FROM FoundPlace WHERE PetID = @PetID;
+                IF EXISTS (SELECT 1 FROM Cat WHERE PetID = @PetID)
+                BEGIN
+                    DELETE FROM Cat WHERE PetID = @PetID;
+                END
+                IF EXISTS (SELECT 1 FROM Dog WHERE PetID = @PetID)
+                BEGIN
+                    DELETE FROM Dog WHERE PetID = @PetID;
+                END
+                DELETE FROM Pet WHERE PetID = @PetID;
+            """, petID)
+    
+    return redirect(url_for('myAddition'))
+
 
 @app.route('/filter')
 def filter_pets():
