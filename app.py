@@ -68,6 +68,11 @@ def login():
             with conn.cursor() as cursor:
                 cursor.execute("SELECT * FROM [User] WHERE username = ?;", username)
                 user = cursor.fetchone()
+                cursor.execute("SELECT userID FROM [User] WHERE username = ?;", username)
+                userID = cursor.fetchone()
+                cursor.execute("SELECT * FROM [Admin] WHERE userID = ?;", userID)
+                admin = cursor.fetchone()
+
                 if user and Bcrypt().check_password_hash(user[6], password):
                     session['userID'] = user[0]
                     session['username'] = username
@@ -75,6 +80,12 @@ def login():
                     session['ssn'] = user[1]
                     session['birth'] = user[3]
                     session['gender'] = user[4]
+
+                    if admin:
+                        session['role'] = 'admin'
+                        print("admin")
+                    else:
+                        session['role'] = 'user'
                     flash('Login successful', 'success')
                     return redirect(url_for('login'))
                 else:
