@@ -532,9 +532,35 @@ def PermissionFormAdmin():
                     WHERE requestID = ?
                 """,requestID)
                 request_data = cursor.fetchall()
-    print(request_data)            
-    
+    print(request_data)           
     return render_template('PermissionFormAdmin.html',request=request_data)
+
+@app.route('/api/permission', methods=['POST'])
+def handle_permission():
+    
+    if 'userID' not in session:
+        flash('Please log in first', 'info')
+        print("Login")
+        return redirect(url_for('login'))
+    
+    requestID = request.form.get('requestID')
+    permission = request.form['permission']
+    if request.method == 'POST':
+        with pyodbc.connect(conn_str) as conn:
+            with conn.cursor() as cursor:
+                
+                if(permission == 'APPROVE'):
+                    cursor.execute("""
+                        UPDATE UserRequest
+                        SET approve_request = ?
+                        WHERE requestID = ?;
+                    """, 1, requestID)
+                else:
+                    cursor.execute("""
+                        DELETE FROM UserRequest
+                        WHERE requestID = ? ;
+                    """, requestID)
+    return redirect(url_for('StatusAdmin'))
 
 
 if __name__ == '__main__':

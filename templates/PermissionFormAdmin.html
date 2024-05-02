@@ -24,7 +24,7 @@
       <h1>PERMISSION FORM</h1>
       <div class="location-container">
         <img src="{{ url_for('static', filename='photo/location.png')}}"> 
-        <div class="address">{{ request.Province }}</div>
+        <div class="address">{{ request[0].Province }} {{ request[0].district }} {{ request[0].Sub_district }}</div>
     </div>
 
     <div class="publish-status-block">
@@ -32,62 +32,61 @@
        <!-- <img src="profile_pic.jpg" alt="Profile Picture" -->
        <img src = "{{ url_for('static', filename='photo/profile.png')}}" alt = "Profile picture"> 
        <!-- Display the user's name-->
-       <span>{{ request.name }}</span>
-       <!-- <p>Publish this alert</p> -->
-       <div class="publishStatus">Send Request</div>
+        <span style="font-size: 1.2rem; font-weight: bold; margin-bottom: 5px;">{{ request[0].name }}</span><br><br>
+        <!-- <p>Publish this alert</p> -->
+        <span  style="font-size: 1.0rem; font-weight: normal; display: block;">Send Request</span>
        </div>
 
        <div class = "status">
         <img src = "{{ url_for('static', filename='photo/email.png')}}" alt = "Status picture">
         <!-- display the status of their request-->
-        <span class="score">SCORE: {{ request.score }}</span>
+        <span class="score">SCORE: {{ request[0].score }}</span>
       </div>
       </div>
 
       <div class="Permission_pet-info">
           <img src="{{ url_for('static', filename='photo/pet_image_1.jpg')}}" alt="image of the adopted pet">
         <div class="pet-short-info">
-          <div style="font-size: 30px;"><b>{{ request.petName }}</b></div><br><br>
+          <div style="font-size: 30px;"><b>{{ request[0].petName }}</b></div><br><br>
           <!-- Display the breed, gender, sterlize -->
-          {{ request.breed }} | {{ request.gender }} | {{ request.sterilized }}
+          {{ request[0].breed }} | {{ request[0].gender }} | Sterrilization : {{ request[0].sterilization }}
         </div>
       </div>
-      <div class="size-age-colors">Size: {{ request.size }}  Age: {{ request.age }}  Colors: <span class="color-orange"></span></div>
-      <div class="Permission-behavior">{{ request.behavior }}</div>
-      <form class="PermissionBlock" method="post" action="">
+      <div class="size-age-colors">Size: {{ request[0].size }}  Age: {{ request[0].age }}  Colors: <span class="color-{{ request[0].hair_color }}"></span></div>
+      <div class="Permission-behavior">{{ request[0].behavior }}</div>
+
+
+      <form class="PermissionBlock" id="permissionForm" method="post" action="/api/permission">
+        <br><br>
+        <input type="hidden" name="requestID" value="{{ request[0].requestID }}">
         Permission<br><br>
-        <input type="checkbox" id="ADOPT" name="permission" onclick="toggleCheckbox(this)">
+        <input type="checkbox" id="ADOPT" name="permission" value="APPROVE" onclick="toggleCheckbox(this)">
         <label for="ADOPT">ADOPT</label>
         
-        <input type="checkbox" id="REJECT" name="permission" onclick="toggleCheckbox(this)">
+        <input type="checkbox" id="REJECT" name="permission" value="REJECT" onclick="toggleCheckbox(this)">
         <label for="REJECT">REJECT</label>
       </form>
       
       <button class="approve-btn" onclick="approve()">APPROVE</button>
 
-    </div> 
+      </div> 
     </div>
 
     <script>
       function approve() {
-       
-    }
-    
-    function toggleCheckbox(checkbox) {
-      // ตรวจสอบว่า checkbox ที่ถูกติ้กอยู่
-      if (checkbox.checked) {
-        // ถ้า checkbox ที่ถูกติ้กอยู่มี id เป็น ADOPT
-        if (checkbox.id === "ADOPT") {
-          // ยกเลิกการติ้ก REJECT
-          document.getElementById("REJECT").checked = false;
-        } else {
-          // ยกเลิกการติ้ก ADOPT
-          document.getElementById("ADOPT").checked = false;
+        document.getElementById("permissionForm").submit();
+      }
+      
+      function toggleCheckbox(checkbox) {
+        // Check which checkbox is checked and uncheck the other
+        if (checkbox.checked) {
+          if (checkbox.id === "ADOPT") {
+            document.getElementById("REJECT").checked = false;
+          } else {
+            document.getElementById("ADOPT").checked = false;
+          }
         }
       }
-    }
-
-    
     </script>
 </body>
 </html>
