@@ -496,7 +496,7 @@ def StatusAdmin():
         with pyodbc.connect(conn_str) as conn:
             with conn.cursor() as cursor:
                 cursor.execute("""
-                    SELECT Pet.name, UserRequest.date, UserRequest.approve_request,UserRequest.userID
+                    SELECT Pet.name, UserRequest.date, UserRequest.approve_request,UserRequest.userID,UserRequest.requestID
                     FROM UserRequest
                     JOIN Pet ON UserRequest.PetID = Pet.PetID
                 """)
@@ -505,7 +505,36 @@ def StatusAdmin():
 
 @app.route('/PermissionFormAdmin')
 def PermissionFormAdmin():
-    return render_template('PermissionFormAdmin.html',)
+    if 'userID' not in session:
+        flash('Please log in first', 'info')
+        print("Login")
+        return redirect(url_for('login'))
+    
+    requestID = request.args.get('requestID')
+    
+    if request.method == 'GET':
+        with pyodbc.connect(conn_str) as conn:
+            with conn.cursor() as cursor:
+                cursor.execute("""
+                    SELECT  
+                        UR.approve_request,
+                        UR.userID,
+                        UR.requestID,
+                        P.*,
+                        FP.*,
+                        U.name,
+                        E.score
+                    FROM UserRequest UR
+                    JOIN Pet P ON UR.PetID = P.PetID
+                    LEFT JOIN FoundPlace FP ON UR.PetID = FP.PetID
+                    JOIN [User] U ON UR.userID = U.userID
+                    LEFT JOIN Exam E ON UR.userID = E.userID
+                    WHERE requestID = ?
+                """,requestID)
+                request_data = cursor.fetchall()
+    print(request_data)            
+    
+    return render_template('PermissionFormAdmin.html',request=request_data)
 
 
 if __name__ == '__main__':

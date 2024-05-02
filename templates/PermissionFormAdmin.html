@@ -24,16 +24,15 @@
       <h1>PERMISSION FORM</h1>
       <div class="location-container">
         <img src="{{ url_for('static', filename='photo/location.png')}}"> 
-        <div class="address">Muang Phuket</div>
+        <div class="address">{{ request.Province }}</div>
     </div>
 
-    
     <div class="publish-status-block">
       <div class="publish-alert"> 
        <!-- <img src="profile_pic.jpg" alt="Profile Picture" -->
        <img src = "{{ url_for('static', filename='photo/profile.png')}}" alt = "Profile picture"> 
        <!-- Display the user's name-->
-       <span>Sunisa Sangsrichun</span>
+       <span>{{ request.name }}</span>
        <!-- <p>Publish this alert</p> -->
        <div class="publishStatus">Send Request</div>
        </div>
@@ -41,26 +40,20 @@
        <div class = "status">
         <img src = "{{ url_for('static', filename='photo/email.png')}}" alt = "Status picture">
         <!-- display the status of their request-->
-        <span class="score">SCORE: 8</span>
+        <span class="score">SCORE: {{ request.score }}</span>
       </div>
       </div>
 
       <div class="Permission_pet-info">
           <img src="{{ url_for('static', filename='photo/pet_image_1.jpg')}}" alt="image of the adopted pet">
-        
-
         <div class="pet-short-info">
-          <div style="font-size: 30px;"><b>ITIM</b></div><br><br>
+          <div style="font-size: 30px;"><b>{{ request.petName }}</b></div><br><br>
           <!-- Display the breed, gender, sterlize -->
-          SOKOKE | FEMALE | STERILIZED
+          {{ request.breed }} | {{ request.gender }} | {{ request.sterilized }}
         </div>
       </div>
-
-
-      
-      <div class="size-age-colors">Size: 4.2 KG  Age: 12 - 60 MONTHS  Colors: <span class="color-orange"></span></div>
-      <div class="Permission-behavior">Behavior: She is particularly sociable, relatively high in friendliness and low in aloofness and shyness</div>
-    
+      <div class="size-age-colors">Size: {{ request.size }}  Age: {{ request.age }}  Colors: <span class="color-orange"></span></div>
+      <div class="Permission-behavior">{{ request.behavior }}</div>
       <form class="PermissionBlock" method="post" action="">
         Permission<br><br>
         <input type="checkbox" id="ADOPT" name="permission" onclick="toggleCheckbox(this)">
@@ -96,9 +89,5 @@
 
     
     </script>
-
-
-
-    
 </body>
 </html>
