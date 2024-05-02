@@ -17,12 +17,14 @@ Database ของ Stray Home ถูกสร้างขึ้นบน Azure S
 Windows:
 1. Install Python 3.10.12 from [Python Official Website](https://www.python.org/downloads/release/python-31012/)
 2. Check if Python 3.10.12 and pip is installed by running `python --version` and `pip --version` in Command Prompt
+1. Clone Repository using git `git clone https://github.com/pakin6509681182/cs251_databaseproject.git`
 2. Install all required packages by running `pip install -r requirements.txt` in the project directory
 3. Install ODBC Driver 17 for SQL Server (Windows) from [Microsoft Official Website](https://go.microsoft.com/fwlink/?linkid=2266337)
 4. Done!
 
 Linux :
 1. Check if Python 3.10.12 is installed by running `python3 --version` in terminal
+1. Clone Repository using git `git clone https://github.com/pakin6509681182/cs251_databaseproject.git`
 2. Install all required packages by running `pip install -r requirements.txt` in the project directory
 3. Follow instructions on [Microsoft Official Website](https://learn.microsoft.com/en-us/sql/connect/odbc/linux-mac/installing-the-microsoft-odbc-driver-for-sql-server?view=sql-server-ver16&tabs=alpine18-install%2Cubuntu17-install%2Cdebian8-install%2Credhat7-13-install%2Crhel7-offline#17) to install ODBC Driver 17 for SQL Server in different Linux distributions
 4. Done!
