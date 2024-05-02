@@ -486,5 +486,27 @@ def statusUser():
 def PermissionFormUser():
     return render_template('PermissionFormUser.html',)
 
+@app.route('/StatusAdmin')
+def StatusAdmin():
+    if 'userID' not in session:
+        flash('Please log in first', 'info')
+        return redirect(url_for('login'))
+    
+    if request.method == 'GET':
+        with pyodbc.connect(conn_str) as conn:
+            with conn.cursor() as cursor:
+                cursor.execute("""
+                    SELECT Pet.name, UserRequest.date, UserRequest.approve_request,UserRequest.userID
+                    FROM UserRequest
+                    JOIN Pet ON UserRequest.PetID = Pet.PetID
+                """)
+                requests = cursor.fetchall()
+    return render_template('StatusAdmin.html',requests=requests)
+
+@app.route('/PermissionFormAdmin')
+def PermissionFormAdmin():
+    return render_template('PermissionFormAdmin.html',)
+
+
 if __name__ == '__main__':
     app.run(debug=True)

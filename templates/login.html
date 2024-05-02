@@ -78,7 +78,7 @@
           confirmButtonText: 'Go to Status Page'
         }).then((result) => {
           if (result.isConfirmed) {
-            window.location.href = "{{ url_for('statusUser') }}";
+            window.location.href = "{{ url_for('StatusAdmin') }}";
           }
         })
       }
