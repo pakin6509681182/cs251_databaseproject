@@ -313,25 +313,24 @@ def UpdatePet(petID):
                 """, petID, name, breed, size, gender, age, behaviour, sterilisation, colors, foundDate, petID, petID, name, breed, size, gender, age, behaviour, sterilisation, colors, foundDate, userID, petID)
 
                 cursor.execute("""
-                    IF EXISTS (SELECT 1 FROM FoundPlace WHERE PetID = ?)
-                    BEGIN
-                        UPDATE FoundPlace
-                        SET userID = ?, SSN = ?, Province = ?, Street = ?, Zipcode = ?, Sub_district = ?, district = ?
-                        WHERE PetID = ?;
-                    END
-                    ELSE
-                    BEGIN
-                        INSERT INTO FoundPlace (userID, SSN, PetID, Province, Street, Zipcode, Sub_district, district)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?);
-                    END;
-                """, petID, userID, ssn, province, street, zipcode, sub_district, district, petID, userID, ssn, province, street, zipcode, sub_district, district)
-
+                                    IF EXISTS (SELECT 1 FROM FoundPlace WHERE PetID = ?)
+                                    BEGIN
+                                        UPDATE FoundPlace
+                                        SET userID = ?, SSN = ?, Province = ?, Street = ?, Zipcode = ?, Sub_district = ?, district = ?
+                                        WHERE PetID = ?;
+                                    END
+                                    ELSE
+                                    BEGIN
+                                        INSERT INTO FoundPlace (userID, SSN, PetID, Province, Street, Zipcode, Sub_district, district)
+                                        VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+                                    END;
+                                """, petID, userID, ssn, province, street, zipcode, sub_district, district, petID, userID, ssn, province, street, zipcode, sub_district, district, petID)
                 if type == 'Dog':
                     cursor.execute("INSERT INTO Dog (PetID) VALUES (?);", petID)
                 elif type == 'Cat':
                     cursor.execute("INSERT INTO Cat (PetID) VALUES (?);", petID)
         
-        flash('Animal added successfully', 'success')
+        flash('Animal Profile edit successfully', 'success')
         return redirect(url_for('myAddition'))
     
     with pyodbc.connect(conn_str) as conn:
