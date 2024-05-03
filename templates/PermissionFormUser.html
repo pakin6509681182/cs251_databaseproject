@@ -77,26 +77,33 @@
           <h2>ARE YOU SURE </h2>
             <div align-items: center; > To delete the request </div><br>
             <button class="no-btn" onclick="closePopup()">No</button>
-            <button class="cfdelete-btn" onclick="deleteRequest()">Delete</button>
+            <button class="cfdelete-btn" onclick="deleteRequest('{{ request[0].requestID }}')">Delete</button>
              </div>
       </div>
 
-    <script>
-      function confirmDelete() {
-        document.getElementById("confirmPopup").style.display = "flex";
-        document.getElementById("confirmPopup").style.alignItems = "center";
-        document.getElementById("confirmPopup").style.justifyContent = "center";
-    }
-    
-    function closePopup() {
-        document.getElementById("confirmPopup").style.display = "none";
-    }
-    
-    function deleteRequest() {
-        // Add logic to delete the request here
-        closePopup();
-    }
-    
+      <script>
+        function confirmDelete() {
+            document.getElementById("confirmPopup").style.display = "flex";
+            document.getElementById("confirmPopup").style.alignItems = "center";
+            document.getElementById("confirmPopup").style.justifyContent = "center";
+        }
+        
+        function closePopup() {
+            document.getElementById("confirmPopup").style.display = "none";
+        }
+        
+        function deleteRequest(requestID) {
+              fetch('/delete_request/' + requestID, {
+                  method: 'DELETE'
+              })
+              .then(response => response.json())
+              .then(data => {
+                  window.location.href = data.redirect;
+              })
+              .finally(() => {
+                  closePopup();
+              });
+            }
     </script>
 
 

@@ -601,6 +601,23 @@ def handle_permission():
                     """, requestID)
     return redirect(url_for('StatusAdmin'))
 
+@app.route('/delete_request/<requestID>', methods=['DELETE'])
+def delete_request(requestID):
+    if 'userID' not in session:
+        flash('Please log in first', 'info')
+        print("Login")
+        return redirect(url_for('login'))
+
+    if request.method == 'DELETE':
+        with pyodbc.connect(conn_str) as conn:
+            with conn.cursor() as cursor:
+                    cursor.execute("""
+                        DELETE FROM UserRequest
+                        WHERE requestID = ? ;
+                    """, requestID)
+    
+    flash('Request deleted successfully', 'success')
+    return jsonify({'redirect': url_for('statusUser')}), 200
 
 if __name__ == '__main__':
     app.run(debug=True)
