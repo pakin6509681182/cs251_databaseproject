@@ -25,7 +25,7 @@
       <h1>PERMISSION FORM</h1>
       <div class="location-container">
         <img src="{{ url_for('static', filename='photo/location.png')}}"> 
-        <div class="address">Muang Phuket</div>
+        <div class="address">{{ request[0].Province }} {{ request[0].district }} {{ request[0].Sub_district }}</div>
     </div>
 
     
@@ -34,7 +34,7 @@
        <!-- <img src="profile_pic.jpg" alt="Profile Picture" -->
        <img src = "{{ url_for('static', filename='photo/profile.png')}}" alt = "Profile picture">
        <!-- Display the user's name-->
-       <span>Pornlada Boonthum</span><br>
+       <span>{{ request[0].name }}</span><br>
        <div class="publishStatus">Publish this alert</div>
        <!-- <p>Publish this alert</p> -->
        </div>
@@ -42,7 +42,7 @@
        <div class = "status"> 
         <img src = "{{ url_for('static', filename='photo/email.png')}}" alt = "Status picture">
         <!-- display the status of their request-->
-        <span>Pending</span>
+        <span>{{ 'Approved' if request.approve_request else 'Pending' }}</span>
       </div>
       </div>
 
@@ -53,16 +53,16 @@
         
 
         <div class="pet-short-info">
-          <div style="font-size: 30px;"><b>ITIM</b></div><br><br>
+          <div style="font-size: 30px;"><b>{{ request[0].petName }}</b></div><br><br>
           <!-- Display the breed, gender, sterlize -->
-          SOKOKE | FEMALE | STERILIZED
+          {{ request[0].breed }} | {{ request[0].gender }} | Sterrilization : {{ request[0].sterilization }}
         </div>
       </div>
 
 
       
-      <div class="size-age-colors">Size: 4.2 KG  Age: 12 - 60 MONTHS  Colors: <span class="color-orange"></span></div>
-      <div class="Permission-behavior">Behavior: She is particularly sociable, relatively high in friendliness and low in aloofness and shyness</div>
+      <div class="size-age-colors">Size: {{ request[0].size }}  Age: {{ request[0].age }}  Colors: <span class="color-{{ request[0].hair_color }}"></span></div>
+      <div class="Permission-behavior">{{ request[0].behavior }}</div>
     
     
       <button class="delete-btn" onclick="confirmDelete()">DELETE</button>

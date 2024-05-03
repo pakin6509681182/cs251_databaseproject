@@ -43,7 +43,7 @@
               <td>{{ pet.date }}</td>
               <td>{{ 'Approved' if pet.approve_request else 'Pending' }}</td>
               <td>
-                  <a href="{{url_for('PermissionFormUser') }}">
+                  <a href="{{url_for('PermissionFormUser' , requestID=pet.requestID) }}">
                       <img src="{{ url_for('static', filename='photo/folder.png') }}">
                   </a>
               </td>

@@ -232,37 +232,42 @@ def myAddition():
 
 @app.route('/delete/<petID>', methods=['GET', 'POST'])
 def delete(petID):
+
+    message = None
     with pyodbc.connect(conn_str) as conn:
         with conn.cursor() as cursor:
             cursor.execute("""
-            DECLARE @PetID INT = ?;
-            DECLARE @Message NVARCHAR(255);
-            IF EXISTS (SELECT 1 FROM UserRequest WHERE PetID = @PetID)
-            BEGIN
-                -- Set message if PetID exists in UserRequest table
-                SET @Message = 'Pet is currently in Request Pending.';
-            END
-            ELSE
-            BEGIN
-                DELETE FROM FoundPlace WHERE PetID = @PetID;
-                IF EXISTS (SELECT 1 FROM Cat WHERE PetID = @PetID)
+                DECLARE @PetID INT = ?;
+                DECLARE @Message VARCHAR(255);
+                IF EXISTS (SELECT 1 FROM UserRequest WHERE PetID = @PetID)
                 BEGIN
-                    DELETE FROM Cat WHERE PetID = @PetID;
+                    -- Set message if PetID exists in UserRequest table
+                    SET @Message = 'Pet is currently in Request Pending.';
                 END
-                IF EXISTS (SELECT 1 FROM Dog WHERE PetID = @PetID)
+                ELSE
                 BEGIN
-                    DELETE FROM Dog WHERE PetID = @PetID;
+                    DELETE FROM FoundPlace WHERE PetID = @PetID;
+                    IF EXISTS (SELECT 1 FROM Cat WHERE PetID = @PetID)
+                    BEGIN
+                        DELETE FROM Cat WHERE PetID = @PetID;
+                    END
+                    IF EXISTS (SELECT 1 FROM Dog WHERE PetID = @PetID)
+                    BEGIN
+                        DELETE FROM Dog WHERE PetID = @PetID;
+                    END
+                    DELETE FROM Pet WHERE PetID = @PetID;
+                    SET @Message = 'Pet deleted successfully.';
+                    SELECT @Message AS Message
                 END
-                DELETE FROM Pet WHERE PetID = @PetID;
-                SET @Message = 'Pet deleted successfully.';
-            END
+                
+                SELECT @Message AS Message
+                """, petID)
             
-            SELECT @Message AS Message
-            """, petID)
             row = cursor.fetchone()
+            print(row.Message)
             if row:
                 message = row.Message
-            flash(message, 'error')
+                flash(message, 'success')
     
     return redirect(url_for('myAddition'))
 
@@ -473,17 +478,13 @@ def statusUser():
         with pyodbc.connect(conn_str) as conn:
             with conn.cursor() as cursor:
                 cursor.execute("""
-                    SELECT Pet.name, UserRequest.date, UserRequest.approve_request
+                    SELECT Pet.name, UserRequest.date, UserRequest.approve_request,UserRequest.requestID
                     FROM UserRequest
                     JOIN Pet ON UserRequest.PetID = Pet.PetID
                     WHERE UserRequest.userID = ?;
                 """, userID)
                 pets = cursor.fetchall() 
     return render_template('StatusUser.html', pets=pets)
-
-@app.route('/PermissionFormUser')
-def PermissionFormUser():
-    return render_template('PermissionFormUser.html',)
 
 @app.route('/StatusAdmin')
 def StatusAdmin():
@@ -533,6 +534,38 @@ def PermissionFormAdmin():
                 request_data = cursor.fetchall()
     print(request_data)           
     return render_template('PermissionFormAdmin.html',request=request_data)
+
+@app.route('/PermissionFormUser')
+def PermissionFormUser():
+    if 'userID' not in session:
+        flash('Please log in first', 'info')
+        print("Login")
+        return redirect(url_for('login'))
+    
+    requestID = request.args.get('requestID')
+    
+    if request.method == 'GET':
+        with pyodbc.connect(conn_str) as conn:
+            with conn.cursor() as cursor:
+                cursor.execute("""
+                    SELECT  
+                        UR.approve_request,
+                        UR.userID,
+                        UR.requestID,
+                        P.*,P.name AS petName,
+                        FP.*,
+                        U.name,
+                        E.score
+                    FROM UserRequest UR
+                    JOIN Pet P ON UR.PetID = P.PetID
+                    LEFT JOIN FoundPlace FP ON UR.PetID = FP.PetID
+                    JOIN [User] U ON UR.userID = U.userID
+                    LEFT JOIN Exam E ON UR.userID = E.userID
+                    WHERE requestID = ?
+                """,requestID)
+                request_data = cursor.fetchall()
+    print(request_data)      
+    return render_template('PermissionFormUser.html',request=request_data)
 
 @app.route('/api/permission', methods=['POST'])
 def handle_permission():
