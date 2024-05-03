@@ -238,37 +238,44 @@ def delete(petID):
         with conn.cursor() as cursor:
             cursor.execute("""
                 DECLARE @PetID INT = ?;
-                DECLARE @Message VARCHAR(255);
+                DECLARE @Message NVARCHAR(255);
                 IF EXISTS (SELECT 1 FROM UserRequest WHERE PetID = @PetID)
-                BEGIN
-                    -- Set message if PetID exists in UserRequest table
-                    SET @Message = 'Pet is currently in Request Pending.';
-                END
+                    BEGIN
+                        -- Set message if PetID exists in UserRequest table
+                        SET @Message = 'Pet is currently in Request Pending.'
+                        SELECT @Message AS Message
+                    END
                 ELSE
                 BEGIN
-                    DELETE FROM FoundPlace WHERE PetID = @PetID;
-                    IF EXISTS (SELECT 1 FROM Cat WHERE PetID = @PetID)
-                    BEGIN
-                        DELETE FROM Cat WHERE PetID = @PetID;
-                    END
-                    IF EXISTS (SELECT 1 FROM Dog WHERE PetID = @PetID)
-                    BEGIN
-                        DELETE FROM Dog WHERE PetID = @PetID;
-                    END
-                    DELETE FROM Pet WHERE PetID = @PetID;
-                    SET @Message = 'Pet deleted successfully.';
-                    SELECT @Message AS Message
+                        SET @Message = 'Pet deleted successfully.'
+                        SELECT @Message AS Message
+                        DELETE FROM FoundPlace WHERE PetID = @PetID;
+                        IF EXISTS (SELECT 1 FROM Cat WHERE PetID = @PetID)
+                        BEGIN
+                            DELETE FROM Cat WHERE PetID = @PetID
+                        END
+
+                        IF EXISTS (SELECT 1 FROM Dog WHERE PetID = @PetID)
+                        BEGIN
+                            DELETE FROM Dog WHERE PetID = @PetID
+                        END
+                        DELETE FROM Pet WHERE PetID = @PetID
                 END
                 
-                SELECT @Message AS Message
                 """, petID)
             
             row = cursor.fetchone()
-            print(row.Message)
-            if row:
-                message = row.Message
+            print(row)
+            message = row.Message
+            print(message)
+            
+            if message == 'Pet is currently in Request Pending.':
+                print(message)
+                flash(message, 'error')
+            elif message == 'Pet deleted successfully.':
+                print(message)
                 flash(message, 'success')
-    
+
     return redirect(url_for('myAddition'))
 
 @app.route('/UpdatePet/<petID>', methods=['GET', 'POST'])
